@@ -9,7 +9,7 @@
 
 DFA::DFA(NFA& nfa) {
     this->nfa = &nfa;
-    this->alphabet_size = nfa.alphabet_size;
+    this->alphabet_size = nfa.alphabet_size - 1;
 
     this->set_epsilon_path(this->initial_states, nfa.initial_node);
     this->states_to_search.push(initial_states);
@@ -104,17 +104,17 @@ void DFA::write_to_file(string filepath) {
         return;
     }
 
-    file << this->state_amount << "/n";
-    file << this->alphabet_size << "/n";
-    file << this->final_states.size() << "/n";
+    file << this->state_amount << "\n";
+    file << this->alphabet_size << "\n";
+    file << this->final_states.size() << "\n";
 
     for(const auto& final_state:final_states){
-        file << this->translations[final_state] << "/n";
+        file << this->translations[final_state] << "\n";
     }
 
-    file << transitions.size() << "/n";
+    file << transitions.size() << "\n";
 
     for(const auto& transition:transitions){
-        file << translations[transition.first.first] << " " << translations[transition.second] << " " << transition.first.second << "/n";
+        file << translations[transition.first.first] << " " << translations[transition.second] << " " << transition.first.second << "\n";
     }
 }
