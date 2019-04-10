@@ -17,6 +17,8 @@ NFA::NFA(string filepath) {
         return;
     }
 
+    this->initial_node = 0;
+
     file >> this->state_amount;
     file >> this->alphabet_size;
 

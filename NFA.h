@@ -14,8 +14,11 @@ class NFA {
 private:
     int state_amount;
     int alphabet_size;
+    int initial_node;
     vector<int> final_states;
     map<pair<int,char>, vector<int>> transitions;
+
+    friend class DFA;
 public:
     explicit NFA(string filepath);
 
