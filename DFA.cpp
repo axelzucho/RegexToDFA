@@ -4,6 +4,9 @@
 
 #include "DFA.h"
 
+#include <fstream>
+#include <iostream>
+
 DFA::DFA(NFA& nfa) {
     this->nfa = &nfa;
     this->alphabet_size = nfa.alphabet_size;
@@ -78,6 +81,40 @@ void DFA::find_final_states() {
     }
 }
 
+void DFA::update_translations() {
+    this->translations.clear();
+
+    this->translations[this->initial_states] = 0;
+    int current_index = 1;
+    for(const auto& states:this->queued_states){
+        if(translations.find(states) == translations.end()){
+            translations[states] = current_index++;
+        }
+    }
+}
+
 void DFA::write_to_file(string filepath) {
-    
+    this->update_translations();
+
+    ofstream file;
+    file.open(filepath);
+    // Check if we could open the provided filepath.
+    if (!file.is_open()) {
+        cout << "File to write results not opened correctly" << endl;
+        return;
+    }
+
+    file << this->state_amount << "/n";
+    file << this->alphabet_size << "/n";
+    file << this->final_states.size() << "/n";
+
+    for(const auto& final_state:final_states){
+        file << this->translations[final_state] << "/n";
+    }
+
+    file << transitions.size() << "/n";
+
+    for(const auto& transition:transitions){
+        file << translations[transition.first.first] << " " << translations[transition.second] << " " << transition.first.second << "/n";
+    }
 }

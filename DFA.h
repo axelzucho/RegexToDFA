@@ -21,6 +21,7 @@ private:
     set<set<int>> final_states;
     set<int> initial_states;
     map<pair<set<int>, char>, set<int>> transitions;
+    map<set<int>, int> translations;
     set<set<int>> queued_states;
     queue<set<int>> states_to_search;
 public:
@@ -30,6 +31,7 @@ public:
     void find_transitions();
     void find_final_states();
     void write_to_file(string filepath);
+    void update_translations();
 };
 
 
