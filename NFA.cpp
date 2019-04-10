@@ -37,7 +37,11 @@ NFA::NFA(string filepath) {
         int initial_node, final_node;
         char symbol;
         file >> initial_node >> final_node >> symbol;
-
-        transitions[make_pair(initial_node, final_node)] = symbol;
+        pair<int, char> key = make_pair(initial_node, symbol);
+        if (this->transitions.find(key) != transitions.end()){
+            transitions[key].push_back(final_node);
+        } else {
+            this->transitions[key] = {final_node};
+        }
     }
 }

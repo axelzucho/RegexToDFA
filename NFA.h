@@ -15,7 +15,7 @@ private:
     int state_amount;
     int alphabet_size;
     vector<int> final_states;
-    map<pair<int,int>, char> transitions;
+    map<pair<int,char>, vector<int>> transitions;
 public:
     explicit NFA(string filepath);
 
