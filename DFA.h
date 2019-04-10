@@ -18,7 +18,7 @@ private:
     NFA* nfa;
     int state_amount;
     int alphabet_size;
-    set<int> final_states;
+    set<set<int>> final_states;
     set<int> initial_states;
     map<pair<set<int>, char>, set<int>> transitions;
     set<set<int>> queued_states;
@@ -28,6 +28,8 @@ public:
     void set_epsilon_path(set<int>& states, int state_to_add);
     void set_epsilon_path(set<int>& states_no_epsilon);
     void find_transitions();
+    void find_final_states();
+    void write_to_file(string filepath);
 };
 
 

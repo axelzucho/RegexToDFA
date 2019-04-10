@@ -12,6 +12,9 @@ DFA::DFA(NFA& nfa) {
     this->states_to_search.push(initial_states);
     this->queued_states.insert(initial_states);
     this->find_transitions();
+    this->state_amount = (int)this->queued_states.size();
+
+    this->find_final_states();
 }
 
 void DFA::set_epsilon_path(set<int> &states, int state_to_add) {
@@ -40,7 +43,7 @@ void DFA::find_transitions() {
         this->set_epsilon_path(processing_states);
 
         for(int i = 0; i < this->alphabet_size; i++){
-            char symbol = 'a' + i;
+            char symbol = (char)('a' + i);
             set<int> new_states;
             for(auto it:processing_states){
                 if(nfa->transitions.find(make_pair(it, symbol)) == nfa->transitions.end()) {
@@ -62,4 +65,19 @@ void DFA::find_transitions() {
             }
         }
     }
+}
+
+void DFA::find_final_states() {
+    for(auto queued_state:this->queued_states){
+        for(const auto& final_state:this->nfa->final_states){
+            if(queued_state.find(final_state) != queued_state.end()){
+                this->final_states.insert(queued_state);
+                break;
+            }
+        }
+    }
+}
+
+void DFA::write_to_file(string filepath) {
+    
 }
