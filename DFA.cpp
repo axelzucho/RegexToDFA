@@ -10,6 +10,7 @@ DFA::DFA(NFA& nfa) {
 
     this->set_epsilon_path(this->initial_states, nfa.initial_node);
     this->states_to_search.push(initial_states);
+    this->queued_states.insert(initial_states);
     this->find_transitions();
 }
 
@@ -37,8 +38,6 @@ void DFA::find_transitions() {
         this->states_to_search.pop();
 
         this->set_epsilon_path(processing_states);
-
-        if(this->queued_states.find(processing_states) != this->queued_states.end()) continue;
 
         for(int i = 0; i < this->alphabet_size; i++){
             char symbol = 'a' + i;
