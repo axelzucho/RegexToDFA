@@ -93,7 +93,7 @@ void DFA::update_translations() {
     }
 }
 
-void DFA::write_to_file(string filepath) {
+bool DFA::write_to_file(string filepath) {
     this->update_translations();
 
     ofstream file;
@@ -101,7 +101,7 @@ void DFA::write_to_file(string filepath) {
     // Check if we could open the provided filepath.
     if (!file.is_open()) {
         cout << "File to write results not opened correctly" << endl;
-        return;
+        return false;
     }
 
     file << this->state_amount << "\n";
@@ -117,4 +117,8 @@ void DFA::write_to_file(string filepath) {
     for(const auto& transition:transitions){
         file << translations[transition.first.first] << " " << translations[transition.second] << " " << transition.first.second << "\n";
     }
+
+    file.close();
+
+    return true;
 }

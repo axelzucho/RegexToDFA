@@ -30,7 +30,7 @@ public:
     void set_epsilon_path(set<int>& states_no_epsilon);
     void find_transitions();
     void find_final_states();
-    void write_to_file(string filepath);
+    bool write_to_file(string filepath);
     void update_translations();
 };
 

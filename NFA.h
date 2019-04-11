@@ -12,6 +12,7 @@ using namespace std;
 
 class NFA {
 private:
+    bool opened_file;
     int state_amount;
     int alphabet_size;
     int initial_node;
@@ -21,6 +22,7 @@ private:
     friend class DFA;
 public:
     explicit NFA(string filepath);
+    bool found_file();
 
 };
 

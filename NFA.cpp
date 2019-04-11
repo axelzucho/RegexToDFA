@@ -13,9 +13,10 @@ NFA::NFA(string filepath) {
     file.open(filepath);
     // Check if we could open the provided filepath.
     if (!file.is_open()) {
-        cout << "File not opened correctly" << endl;
+        opened_file = false;
         return;
     }
+    opened_file = true;
 
     this->initial_node = 0;
 
@@ -46,4 +47,10 @@ NFA::NFA(string filepath) {
             this->transitions[key] = {final_node};
         }
     }
+
+    file.close();
+}
+
+bool NFA::found_file() {
+    return opened_file;
 }
