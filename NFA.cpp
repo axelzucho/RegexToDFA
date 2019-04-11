@@ -23,17 +23,17 @@ NFA::NFA(string filepath) {
     file >> this->state_amount;
     file >> this->alphabet_size;
 
-    unsigned long final_state_amount;
+    int final_state_amount;
 
     file >> final_state_amount;
-    this->final_states.reserve(final_state_amount);
+    this->final_states.reserve((unsigned long)final_state_amount);
     for(int i = 0; i < final_state_amount; ++i){
         int state;
         file >> state;
         this->final_states.push_back(state);
     }
 
-    unsigned long transition_amount;
+    int transition_amount;
 
     file >> transition_amount;
     for(int i = 0; i < transition_amount; ++i){
