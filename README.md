@@ -48,7 +48,7 @@ The input file should be as follows (each part should be written with a newline 
 4. __Final states__: The actual final states, listed one per line. For example `9`.
 
 5. __Transition amount__: The amount of transitions that will be specified for the NFA, one per line. 
-Each transition will be specified as follows (elements separated by spaces):
+Each transition will be specified as follows (elements separated by whitespaces):
     1. Initial node
     2. Final node
     3. Symbol
