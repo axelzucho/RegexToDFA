@@ -8,15 +8,25 @@ This program converts a given NFA with epsilon movements to an equivalent DFA.
 
 After downloading, run `make` in the downloaded directory.
 
+![alt text](README_images/make.png)
+
 After running it, you will find the executable 'automata_conversion.out'. To run it, execute the command `./automata_conversion.out`.
+
+![alt text](README_images/run.png)
 
 It will then ask you to input two strings:
 
 1. The path of the input file. An example of a valid input is: `NFA_example.txt`.
 
+![alt text](README_images/input_filepath.png)
+
 2. The path of the output file. An example of a valid input is: `DFA_solution.txt`.
 
+![alt text](README_images/output_filepath.png)
+
 You will then see the message `Output written successfully!` if the execution was correct.
+
+![alt text](README_images/result.png)
 
 ## Input file format
 
