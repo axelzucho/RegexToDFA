@@ -31,13 +31,11 @@ NFA::NFA(string filepath) {
 
     // Gets the amount of final states.
     file >> final_state_amount;
-    // Reserves this amount in the vector.
-    this->final_states.reserve((unsigned long)final_state_amount);
     // Iterates for each of the final states and adds them to the vector.
     for(int i = 0; i < final_state_amount; ++i){
         int state;
         file >> state;
-        this->final_states.push_back(state);
+        this->final_states.insert(state);
     }
 
     int transition_amount;
@@ -51,11 +49,11 @@ NFA::NFA(string filepath) {
         file >> initial_node >> final_node >> symbol;
         // Create a pair that will function as the key in our map.
         pair<int, char> key = make_pair(initial_node, symbol);
-        // If there are already existing transitions for the given key, just add the new destination to the vector.
+        // If there are already existing transitions for the given key, just add the new destination to the set.
         if (this->transitions.find(key) != transitions.end()){
-            transitions[key].push_back(final_node);
+            transitions[key].insert(final_node);
         } else {
-            // If not, add a new vector containing the destination state.
+            // If not, add a new set containing the destination state.
             this->transitions[key] = {final_node};
         }
     }

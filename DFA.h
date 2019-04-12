@@ -5,7 +5,6 @@
 #ifndef NFA_TO_DFA_DFA_H
 #define NFA_TO_DFA_DFA_H
 
-#include <vector>
 #include <map>
 #include <set>
 #include <queue>

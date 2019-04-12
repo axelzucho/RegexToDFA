@@ -5,7 +5,7 @@
 #ifndef NFA_TO_DFA_NFA_H
 #define NFA_TO_DFA_NFA_H
 
-#include <vector>
+#include <set>
 #include <map>
 
 using namespace std;
@@ -25,10 +25,10 @@ private:
     int initial_node;
 
     // Contains all final states in the DFA.
-    vector<int> final_states;
+    set<int> final_states;
 
-    // Dictionary that maps a state and a symbol to another state.
-    map<pair<int,char>, vector<int>> transitions;
+    // Dictionary that maps a state and a symbol to a set of states.
+    map<pair<int,char>, set<int>> transitions;
 
     // So that DFA can access private values.
     friend class DFA;
