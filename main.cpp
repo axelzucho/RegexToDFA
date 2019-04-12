@@ -12,7 +12,9 @@ int main() {
     cout << "Please input the filepath for the input" << endl;
     cin >> input_file;
 
+    // Creates an NFA from the input file.
     NFA nfa(input_file);
+    // If we didn't find the file, just return.
     if(!nfa.found_file()){
         cout << "Could not open input file" << endl;
         return 0;
@@ -21,7 +23,9 @@ int main() {
     cout << "Please input the filepath for the output" << endl;
     cin >> output_file;
 
+    // Creates a DFA from the given NFA.
     DFA dfa(nfa);
+    // Writes the data to the specified path, checking if it was successful.
     if(dfa.write_to_file(output_file)){
         cout << "Output written successfully!\n";
     } else {
