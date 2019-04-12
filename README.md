@@ -2,7 +2,7 @@
 
 ## Description
 
-A simple and efficient C++ program that converts a given NFA with epsilon movements to an equivalent DFA.
+A simple, efficient, and thoroughly commented C++ program that converts a given NFA with epsilon movements to an equivalent DFA.
 
 ## Usage
 
