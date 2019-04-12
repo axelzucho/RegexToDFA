@@ -47,8 +47,9 @@ The input file should be as follows (each part should be written with a newline 
 
 4. __Final states__: The actual final states, listed one per line. For example `9`.
 
-5. __Transition amount__: The amount of transitions that will be specified for the NFA, one per line. 
-Each transition will be specified as follows (elements separated by whitespaces):
+5. __Transition amount__: The amount of transitions that will be specified for the NFA. For example `12`.
+ 
+6. __Transitions__: One per line. Each transition will be specified as follows (elements separated by whitespaces):
     1. Initial node
     2. Final node
     3. Symbol
@@ -68,6 +69,6 @@ There is also an example of this file format in the `NFA_example.txt` file in th
 
 The output will be written in the specified path and will have the same format as the input file.
 
- ## Author
+## Author
  
- Axel Zuchovicki - ITESM CSF
+Axel Zuchovicki - ITESM CSF
