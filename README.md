@@ -18,13 +18,13 @@ It will then ask you to input two strings:
 
 1. The path of the input file. An example of a valid input is: `NFA_example.txt`.
 
-![alt text](README_images/input_filepath.png)
+    ![alt text](README_images/input_filepath.png)
 
 2. The path of the output file. An example of a valid input is: `DFA_solution.txt`.
 
-![alt text](README_images/output_filepath.png)
+    ![alt text](README_images/output_filepath.png)
 
-You will then see the message `Output written successfully!` if the execution was correct.
+You will then see the message `Output written successfully!` if the execution was successful.
 
 ![alt text](README_images/result.png)
 
