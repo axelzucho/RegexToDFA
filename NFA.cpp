@@ -8,7 +8,7 @@
 
 using namespace std;
 
-NFA::NFA(string filepath) {
+NFA::NFA(const string& filepath) {
     fstream file;
     file.open(filepath);
     // Check if we could open the provided filepath.
@@ -48,19 +48,24 @@ NFA::NFA(string filepath) {
         // Gets the transition data from the file.
         file >> initial_node >> final_node >> symbol;
         // Create a pair that will function as the key in our map.
-        pair<int, char> key = make_pair(initial_node, symbol);
-        // If there are already existing transitions for the given key, just add the new destination to the set.
-        if (this->transitions.find(key) != transitions.end()){
-            transitions[key].insert(final_node);
-        } else {
-            // If not, add a new set containing the destination state.
-            this->transitions[key] = {final_node};
-        }
+        add_edge(initial_node, final_node, symbol);
     }
 
     file.close();
 }
 
+void NFA::add_edge(int initial_node, int final_node, char symbol){
+    pair<int, char> key = make_pair(initial_node, symbol);
+    // If there are already existing transitions for the given key, just add the new destination to the set.
+    if (this->transitions.find(key) != transitions.end()){
+        transitions[key].insert(final_node);
+    } else {
+        // If not, add a new set containing the destination state.
+        this->transitions[key] = {final_node};
+    }
+}
+
 bool NFA::found_file() {
     return opened_file;
 }
+

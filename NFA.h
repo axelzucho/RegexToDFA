@@ -30,13 +30,16 @@ private:
     // Dictionary that maps a state and a symbol to a set of states.
     map<pair<int,char>, set<int>> transitions;
 
+    void add_edge(int initial_node, int final_node, char symbol);
+
     // So that DFA can access private values.
     friend class DFA;
+    friend class Regex;
 public:
-    explicit NFA(string filepath);
+    explicit NFA(const string& filepath);
     // Returns if the file could be found.
+    explicit NFA() = default;
     bool found_file();
-
 };
 
 

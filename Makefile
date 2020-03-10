@@ -1,4 +1,4 @@
-SOURCES = main.cpp NFA.cpp DFA.cpp
+SOURCES = main.cpp NFA.cpp DFA.cpp Regex.cpp
 MAIN = automata_conversion.out
 
 $(MAIN): $(SOURCES)

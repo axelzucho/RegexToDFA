@@ -2,9 +2,10 @@
 
 #include "NFA.h"
 #include "DFA.h"
+#include "Regex.h"
 
 using namespace std;
-
+/*
 int main() {
     string input_file;
     string output_file;
@@ -33,4 +34,16 @@ int main() {
     }
 
     return 0;
+}
+*/
+
+int main(){
+    string input_file;
+    string output_file;
+
+    cout << "Please input the filepath for the input" << endl;
+    cin >> input_file;
+
+    Regex regex(input_file);
+    cout << "Completed!\n";
 }
