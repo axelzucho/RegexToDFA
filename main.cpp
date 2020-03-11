@@ -45,5 +45,18 @@ int main(){
     cin >> input_file;
 
     Regex regex(input_file);
-    cout << "Completed!\n";
+    regex.convert_to_NFA();
+    DFA dfa(regex.nfa);
+
+    cout << "Please input the filepath for the output" << endl;
+    cin >> output_file;
+
+    // Writes the data to the specified path, checking if it was successful.
+    if(dfa.write_to_file(output_file)){
+        cout << "Output written successfully!\n";
+    } else {
+        cout << "Output could not be written in the provided path\n";
+    }
+
+    return 0;
 }

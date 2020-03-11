@@ -18,6 +18,11 @@ using namespace std;
 class Regex {
 private:
     // Shows if the input file could be opened.
+    struct NodeGroup {
+        int initial_node;
+        int final_node;
+    };
+
     bool opened_file;
 
     fstream file;
@@ -26,17 +31,20 @@ private:
 
     string postfix_form;
 
-    NFA nfa;
-
-    int biggest_node;
-
-    int lowest_node;
-
-    int current_node;
+    int next_index;
 
     friend class DFA;
+
+    NodeGroup apply_operator(const char& op, const NodeGroup& first, const NodeGroup& second);
+    NodeGroup apply_concat(const NodeGroup& first, const NodeGroup& second);
+    NodeGroup apply_or(const NodeGroup& first, const NodeGroup& second);
+    NodeGroup apply_star(const NodeGroup& node_group);
+
+
 public:
     explicit Regex(const string& filepath);
+    NFA nfa;
+    void convert_to_NFA();
 
 };
 
