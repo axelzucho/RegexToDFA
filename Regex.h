@@ -5,8 +5,6 @@
 #ifndef NFA_TO_DFA_REGEX_H
 #define NFA_TO_DFA_REGEX_H
 
-
-
 #include <set>
 #include <map>
 #include <fstream>
@@ -23,24 +21,16 @@ private:
         int final_node;
     };
 
-    bool opened_file;
-
-    fstream file;
-
     string prefix_form;
-
     string postfix_form;
-
     int next_index;
-
-    friend class DFA;
 
     NodeGroup apply_operator(const char& op, const NodeGroup& first, const NodeGroup& second);
     NodeGroup apply_concat(const NodeGroup& first, const NodeGroup& second);
     NodeGroup apply_or(const NodeGroup& first, const NodeGroup& second);
     NodeGroup apply_star(const NodeGroup& node_group);
 
-
+    friend class DFA;
 public:
     explicit Regex(const string& filepath);
     NFA nfa;

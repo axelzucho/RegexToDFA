@@ -61,15 +61,13 @@ string convertToPostfix(const string &s, const map<char, short int> &precedence)
 
 Regex::Regex(const string &filepath) {
     this->next_index = 0;
+    fstream file;
 
     file.open(filepath);
     // Check if we could open the provided filepath.
     if (!file.is_open()) {
-        opened_file = false;
-        return;
+        throw std::runtime_error("Could not open file");
     }
-    // We could open the file.
-    opened_file = true;
 
     file >> prefix_form;
     this->prefix_form = insertConcatOp(this->prefix_form);
