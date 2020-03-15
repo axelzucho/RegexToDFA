@@ -16,15 +16,18 @@ using namespace std;
 class Regex
 {
 private:
-    // Shows if the input file could be opened.
+    // All operators are applied to NodeGroups and return a single NodeGroup.
     struct NodeGroup
     {
         int initial_node;
         int final_node;
     };
 
-    string prefix_form;
+    // The Regex in the infix form.
+    string infix_form;
+    // The Regex in the postfix form, used to transform it to NFA.
     string postfix_form;
+    // The next index on which to create the following state.
     int next_index;
 
     NodeGroup apply_operator(const char &op, const NodeGroup &first, const NodeGroup &second);

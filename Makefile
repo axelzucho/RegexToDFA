@@ -1,5 +1,5 @@
 SOURCES = main.cpp NFA.cpp DFA.cpp Regex.cpp
-MAIN = automata_conversion.out
+MAIN = regex_conversion.out
 
 $(MAIN): $(SOURCES)
 	g++ -std=c++11 $^ -Wall --pedantic -o $@

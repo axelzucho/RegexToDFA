@@ -83,8 +83,8 @@ Regex::Regex(const string &filepath)
         throw std::runtime_error("Could not open file");
     }
 
-    file >> prefix_form;
-    this->prefix_form = insertConcatOp(this->prefix_form);
+    file >> infix_form;
+    this->infix_form = insertConcatOp(this->infix_form);
 
     map<char, short int> precedence = {
             {'(', 0},
@@ -92,8 +92,8 @@ Regex::Regex(const string &filepath)
             {'|', 2},
             {'*', 3}};
 
-    this->postfix_form = convertToPostfix(this->prefix_form, precedence);
-    cout << "Prefix: " << this->prefix_form << "\n";
+    this->postfix_form = convertToPostfix(this->infix_form, precedence);
+    cout << "Prefix: " << this->infix_form << "\n";
     cout << "Postfix: " << this->postfix_form << "\n";
 }
 
