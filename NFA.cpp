@@ -3,20 +3,16 @@
 //
 
 #include <fstream>
-#include <iostream>
 #include "NFA.h"
-#include "SpecialCharacters.h"
 
 
 using namespace std;
 
-NFA::NFA(const string &filepath)
-{
+NFA::NFA(const string &filepath) {
     fstream file;
     file.open(filepath);
     // Check if we could open the provided filepath.
-    if (!file.is_open())
-    {
+    if (!file.is_open()) {
         opened_file = false;
         return;
     }
@@ -34,8 +30,7 @@ NFA::NFA(const string &filepath)
     // Gets the amount of final states.
     file >> final_state_amount;
     // Iterates for each of the final states and adds them to the vector.
-    for (unsigned long long i = 0; i < final_state_amount; ++i)
-    {
+    for (unsigned long long i = 0; i < final_state_amount; ++i) {
         int state;
         file >> state;
         // TODO (for 1 << 128 which bitset currently supports we need boost/multiprecision)
@@ -47,8 +42,7 @@ NFA::NFA(const string &filepath)
 
     file >> transition_amount;
     // Iterates for each transition in the NFA.
-    for (unsigned long long i = 0; i < transition_amount; ++i)
-    {
+    for (unsigned long long i = 0; i < transition_amount; ++i) {
         int initial_node, final_node;
         char symbol;
         // Gets the transition data from the file.
@@ -61,14 +55,12 @@ NFA::NFA(const string &filepath)
     file.close();
 }
 
-void NFA::add_edge(int initial_node, int final_node, char symbol)
-{
+void NFA::add_edge(int initial_node, int final_node, char symbol) {
     pair<int, char> key = make_pair(initial_node, symbol);
     // Add the new destination to the bitset.
     this->transitions[key] |= (1 << final_node);
 }
 
-bool NFA::found_file()
-{
+bool NFA::found_file() {
     return opened_file;
 }
