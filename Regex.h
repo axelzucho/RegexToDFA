@@ -13,10 +13,12 @@
 
 using namespace std;
 
-class Regex {
+class Regex
+{
 private:
     // Shows if the input file could be opened.
-    struct NodeGroup {
+    struct NodeGroup
+    {
         int initial_node;
         int final_node;
     };
@@ -25,18 +27,17 @@ private:
     string postfix_form;
     int next_index;
 
-    NodeGroup apply_operator(const char& op, const NodeGroup& first, const NodeGroup& second);
-    NodeGroup apply_concat(const NodeGroup& first, const NodeGroup& second);
-    NodeGroup apply_or(const NodeGroup& first, const NodeGroup& second);
-    NodeGroup apply_star(const NodeGroup& node_group);
+    NodeGroup apply_operator(const char &op, const NodeGroup &first, const NodeGroup &second);
+    NodeGroup apply_concat(const NodeGroup &first, const NodeGroup &second);
+    NodeGroup apply_or(const NodeGroup &first, const NodeGroup &second);
+    NodeGroup apply_star(const NodeGroup &node_group);
 
     friend class DFA;
+
 public:
-    explicit Regex(const string& filepath);
+    explicit Regex(const string &filepath);
     NFA nfa;
     void convert_to_NFA();
-
 };
-
 
 #endif //NFA_TO_DFA_REGEX_H
