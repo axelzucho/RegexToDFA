@@ -4,6 +4,8 @@
 
 #include "DFA.h"
 
+#include "SpecialCharacters.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -35,8 +37,8 @@ void DFA::set_epsilon_path(set<int> &states, int state_to_add) {
     states.insert(state_to_add);
 
     // Iterates all the states that can be reached with an epsilon movement.
-    for(auto it:this->nfa->transitions[make_pair(state_to_add, 'f')]){
-        // If the state was already in the set, just continue.
+    for(auto it:this->nfa->transitions[make_pair(state_to_add, EPSILON)]){
+        // If the state was already in the set, just continue.k
         if(states.find(it) != states.end()){
             continue;
         } else {

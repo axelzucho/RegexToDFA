@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include "NFA.h"
+#include "SpecialCharacters.h"
+
 
 using namespace std;
 

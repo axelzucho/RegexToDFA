@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stack>
 #include "Regex.h"
+#include "SpecialCharacters.h"
 
 
 string insertConcatOp(const string &s) {
@@ -19,7 +20,7 @@ string insertConcatOp(const string &s) {
 
         const char &next = s[i + 1];
         if (next != '*' && next != '|' && next != ')') {
-            result += '.';
+            result += (char)CONCAT_OP;
         }
     }
 
@@ -31,7 +32,7 @@ string convertToPostfix(const string &s, const map<char, short int> &precedence)
     string output;
     stack<char> ops;
     for (const char &c:s) {
-        if (c == '.' || c == '|' || c == '*') {
+        if (c == CONCAT_OP || c == '|' || c == '*') {
             while (!ops.empty() && precedence.at(ops.top()) >= precedence.at(c)) {
                 output += ops.top();
                 ops.pop();
@@ -74,7 +75,7 @@ Regex::Regex(const string &filepath) {
 
     map<char, short int> precedence = {
             {'(', 0},
-            {'.', 1},
+            {CONCAT_OP, 1},
             {'|', 2},
             {'*', 3}};
 
@@ -84,7 +85,7 @@ Regex::Regex(const string &filepath) {
 }
 
 bool isOperator(const char &op) {
-    return (op == '.' || op == '*' || op == '|');
+    return (op == CONCAT_OP || op == '*' || op == '|');
 }
 
 void Regex::convert_to_NFA() {
@@ -115,18 +116,17 @@ void Regex::convert_to_NFA() {
 }
 
 Regex::NodeGroup Regex::apply_operator(const char &op, const Regex::NodeGroup &first, const Regex::NodeGroup &second) {
-    if (op == '.') {
+    if (op == CONCAT_OP) {
         return apply_concat(first, second);
     } else if (op == '|') {
         return apply_or(first, second);
     } else {
-        throw EXIT_FAILURE;
+        throw runtime_error("Unrecognized operator");
     }
 }
 
 Regex::NodeGroup Regex::apply_concat(const Regex::NodeGroup &first, const Regex::NodeGroup &second) {
-    // TODO(axelzucho): Change 'f' to reflect new epsilon in all of these transitions.
-    nfa.add_edge(first.final_node, second.initial_node, 'f');
+    nfa.add_edge(first.final_node, second.initial_node, EPSILON);
     return NodeGroup{first.initial_node, second.final_node};
 }
 
@@ -134,11 +134,11 @@ Regex::NodeGroup Regex::apply_or(const Regex::NodeGroup &first, const Regex::Nod
     int first_node = this->next_index++;
     int last_node = this->next_index++;
 
-    nfa.add_edge(first_node, first.initial_node, 'f');
-    nfa.add_edge(first_node, second.initial_node, 'f');
+    nfa.add_edge(first_node, first.initial_node, EPSILON);
+    nfa.add_edge(first_node, second.initial_node, EPSILON);
 
-    nfa.add_edge(first.final_node, last_node, 'f');
-    nfa.add_edge(second.final_node, last_node, 'f');
+    nfa.add_edge(first.final_node, last_node, EPSILON);
+    nfa.add_edge(second.final_node, last_node, EPSILON);
 
     return NodeGroup{first_node, last_node};
 }
@@ -147,11 +147,11 @@ Regex::NodeGroup Regex::apply_star(const Regex::NodeGroup &node_group) {
     int first_node = this->next_index++;
     int last_node = this->next_index++;
 
-    nfa.add_edge(first_node, node_group.initial_node, 'f');
-    nfa.add_edge(first_node, last_node, 'f');
+    nfa.add_edge(first_node, node_group.initial_node, EPSILON);
+    nfa.add_edge(first_node, last_node, EPSILON);
 
-    nfa.add_edge(node_group.final_node, node_group.initial_node, 'f');
-    nfa.add_edge(node_group.final_node, last_node, 'f');
+    nfa.add_edge(node_group.final_node, node_group.initial_node, EPSILON);
+    nfa.add_edge(node_group.final_node, last_node, EPSILON);
 
     return NodeGroup{first_node, last_node};
 }
