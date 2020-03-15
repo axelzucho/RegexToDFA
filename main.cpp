@@ -5,8 +5,10 @@
 #include "Regex.h"
 
 using namespace std;
+
 /*
-int main() {
+    int main()
+{
     string input_file;
     string output_file;
 
@@ -16,7 +18,8 @@ int main() {
     // Creates an NFA from the input file.
     NFA nfa(input_file);
     // If we didn't find the file, just return.
-    if(!nfa.found_file()){
+    if (!nfa.found_file())
+    {
         cout << "Could not open input file" << endl;
         return 0;
     }
@@ -27,9 +30,12 @@ int main() {
     // Creates a DFA from the given NFA.
     DFA dfa(nfa);
     // Writes the data to the specified path, checking if it was successful.
-    if(dfa.write_to_file(output_file)){
+    if (dfa.write_to_file(output_file))
+    {
         cout << "Output written successfully!\n";
-    } else {
+    }
+    else
+    {
         cout << "Output could not be written in the provided path\n";
     }
 
@@ -37,7 +43,8 @@ int main() {
 }
 */
 
-int main(){
+int main()
+{
     string input_file;
     string output_file;
 
@@ -52,9 +59,12 @@ int main(){
     cin >> output_file;
 
     // Writes the data to the specified path, checking if it was successful.
-    if(dfa.write_to_file(output_file)){
+    if (dfa.write_to_file(output_file))
+    {
         cout << "Output written successfully!\n";
-    } else {
+    }
+    else
+    {
         cout << "Output could not be written in the provided path\n";
     }
 
