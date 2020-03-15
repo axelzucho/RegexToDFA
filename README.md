@@ -10,13 +10,13 @@ After downloading, run `make` in the downloaded directory.
 
 ![alt text](README_images/make.png)
 
-After running it, you will find the executable 'automata_conversion.out'. To run it, execute the command `./automata_conversion.out`.
+After running it, you will find the executable 'regex_conversion.out'. To run it, execute the command `./regex_conversion.out`.
 
 ![alt text](README_images/run.png)
 
 It will then ask you to input two strings:
 
-1. The path of the input file. An example of a valid input is: `NFA_example.txt`.
+1. The path of the input file. An example of a valid input is: `regex_example.txt`.
 
     ![alt text](README_images/input_filepath.png)
 
@@ -54,12 +54,12 @@ The input file should be as follows (each part should be written with a newline 
     2. Final node
     3. Symbol
     
-    An epsilon movement should be specified with the character `f`.
+    An epsilon movement should be specified with the character `~`.
     
     Examples of valid transitions are as follows:
     
-   1. 0 1 f
-   2. 0 3 f
+   1. 0 1 ~
+   2. 0 3 ~
    3. 1 2 a 
 
 
