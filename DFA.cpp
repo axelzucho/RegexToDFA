@@ -12,7 +12,13 @@
 DFA::DFA(NFA &nfa)
 {
     this->nfa = &nfa;
-    this->alphabet_size = nfa.alphabet_size - 1;
+
+    for(const auto& c:nfa.alphabet){
+        // If the character isn't the EPSILON character, add it to our alphabet.
+        if(c != '~') {
+            alphabet.insert(c);
+        }
+    }
 
     // Obtains the epsilon path from the initial node and saves the group of states to the initial_state class attribute.
     this->set_epsilon_path(this->initial_state, nfa.initial_node);
@@ -73,10 +79,8 @@ void DFA::find_transitions()
         this->set_epsilon_path(processing_states);
 
         // Iterates through all symbols in the alphabet.
-        for (unsigned long long char_offset = 0; char_offset < this->alphabet_size; ++char_offset)
+        for (const auto& symbol: alphabet)
         {
-            // By definition, this is always the alphabet.
-            char symbol = (char)('a' + char_offset);
             // Bitset that will contain the new states accessible from the current state and the iterating symbol.
             bitset<128> new_states;
 
@@ -165,7 +169,6 @@ bool DFA::write_to_file(string filepath)
 
     // Add the first three lines to the file.
     file << this->state_amount << "\n";
-    file << this->alphabet_size << "\n";
     file << this->final_states.size() << "\n";
 
     // Iterates through all the final states and adds them to the file.

@@ -125,6 +125,8 @@ void Regex::convert_to_NFA()
         }
         else
         {
+            // Add the char to the alphabet; if it is repeated, it won't insert it.
+            nfa.alphabet.insert(c);
             NodeGroup adding_group = {this->next_index++, this->next_index++};
             nfa.add_edge(adding_group.initial_node, adding_group.final_node, c);
             node_groups.push(adding_group);
@@ -133,7 +135,6 @@ void Regex::convert_to_NFA()
     this->nfa.initial_node = (unsigned long long)node_groups.top().initial_node;
     this->nfa.final_states = bitset<128>(1 << node_groups.top().final_node);
     this->nfa.state_amount = (unsigned long long)this->next_index;
-    this->nfa.alphabet_size = 4;
 }
 
 Regex::NodeGroup Regex::apply_operator(const char &op, const Regex::NodeGroup &first, const Regex::NodeGroup &second) {

@@ -31,8 +31,8 @@ private:
     // The amount of states in the NFA
     unsigned long long state_amount;
 
-    // The alphabet size for the NFA.
-    unsigned long long alphabet_size;
+    // The alphabet for the NFA.
+    set<char> alphabet;
 
     // The initial node (by definition always 0).
     unsigned long long initial_node;

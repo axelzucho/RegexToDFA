@@ -37,19 +37,13 @@ The input file should be as follows (each part should be written with a newline 
     * If you have 10 states, then the states would range from 0 to 10.
     * The NFA initial state will always be considered to be 0.
 
-2. __Alphabet size__: The size of the alphabet used in the automata. An example of a valid input is `3`. 
-    * Should be an integer with a maximum value of 5. 
-    * The alphabet will always be considered to start with the epsilon character.
-    * The alphabet, if its size is greater than 2, would then be followed by the character 'a', 
-    and subsequently end with the character 'd'.
+2. __Final states amount__: The amount of final states the NFA has. For example: `1`.
 
-3. __Final states amount__: The amount of final states the NFA has. For example: `1`.
+3. __Final states__: The actual final states, listed one per line. For example `9`.
 
-4. __Final states__: The actual final states, listed one per line. For example `9`.
-
-5. __Transition amount__: The amount of transitions that will be specified for the NFA. For example `12`.
+4. __Transition amount__: The amount of transitions that will be specified for the NFA. For example `12`.
  
-6. __Transitions__: One per line. Each transition will be specified as follows (elements separated by whitespaces):
+5. __Transitions__: One per line. Each transition will be specified as follows (elements separated by whitespaces):
     1. Initial node
     2. Final node
     3. Symbol

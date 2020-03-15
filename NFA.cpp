@@ -28,8 +28,6 @@ NFA::NFA(const string &filepath)
 
     // Get the amount of states.
     file >> this->state_amount;
-    // Get the alphabet size.
-    file >> this->alphabet_size;
 
     unsigned long long final_state_amount;
 
@@ -57,6 +55,7 @@ NFA::NFA(const string &filepath)
         file >> initial_node >> final_node >> symbol;
         // Create a pair that will function as the key in our map.
         add_edge(initial_node, final_node, symbol);
+        alphabet.insert(symbol);
     }
 
     file.close();

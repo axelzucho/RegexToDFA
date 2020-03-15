@@ -67,8 +67,8 @@ private:
     // Amount of states fo the DFA.
     unsigned long long state_amount;
 
-    // Alphabet size of the DFA.
-    unsigned long long alphabet_size;
+    // Alphabet for the DFA.
+    set<char> alphabet;
 
     // A set of sets, in which each set will be one final state.
     set<bitset<128>, bitset_comparator> final_states;
