@@ -64,3 +64,61 @@ void NFA::add_edge(int initial_node, int final_node, char symbol) {
 bool NFA::found_file() {
     return opened_file;
 }
+/*
+unsigned long long NFA::get_state_amount() {
+  return state_amount;
+}
+
+//Returns a vector containing each node
+const vector<int> NFA::get_nodes_vector() {
+  vector<int> v(state_amount) ;
+  iota (begin(v), end(v), 0);
+  return v;
+}
+
+//Returns the start and end node of every edge as a vector of pairs
+const vector<pair<int,int>> NFA::get_edges_vector() {
+  vector<pair<int,int>> v;
+  for (const auto &transition : transitions) {
+      v.push_back(make_pair(translations[transition.first.first], translations[transition.second]));
+  }
+  return v;
+}
+
+//This returns a vector of transitions, each transition symbol refers to an edge in the edge vector
+vector<char> NFA::get_transitions() {
+  vector<char> v;
+  for (const auto &transition : transitions) {
+      v.push_back(transition.first.second);
+  }
+  return v;
+}
+
+void NFA::graph(string output_file) {
+  //Set up the nodes, edges, and transition symbols
+  const vector<int> nodes = get_nodes_vector();
+  const vector<pair<int,int>> edges_no_trans = get_edges_vector();
+  vector<char> transitions = get_transitions();
+  const int n_edges = edges_no_trans.size();
+
+  typedef boost::property<boost::edge_weight_t, int> EdgeWeightProperty;
+  typedef boost::adjacency_list<boost::listS, boost::vecS, boost::directedS, boost::no_property, EdgeWeightProperty> DirectedGraph;
+  DirectedGraph g;
+
+  //Populate the graph with the edges
+  for(int i = 0; i < n_edges; i++) {
+    add_edge(edges_no_trans[i].first, edges_no_trans[i].second, transitions[i], g);
+  }
+
+  //Write graph to file
+  {
+    ofstream f(output_file + ".dot");
+    write_graphviz(f, g
+    );
+    f.close();
+  }
+
+  string dot_to_png = "dot -Tpng " + output_file + ".dot > " + output_file + ".png";
+  std::system(dot_to_png.c_str());
+  cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;
+}*/

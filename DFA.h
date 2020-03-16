@@ -10,7 +10,14 @@
 #include <queue>
 #include <set>
 #include <string>
+#include <vector>
+#include <numeric>
 #include <unordered_map>
+
+//Boost for graphing
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graphviz.hpp>
+
 #include "NFA.h"
 
 using namespace std;
@@ -54,7 +61,7 @@ private:
     // Where the original NFA will be stored.
     NFA *nfa;
 
-    // Amount of states fo the DFA.
+    // Amount of states for the DFA.
     unsigned long long state_amount;
 
     // Alphabet for the DFA.
@@ -95,6 +102,12 @@ private:
 
 public:
     explicit DFA(NFA &nfa);
+
+    //Graph the DFA
+    void graph(string output_file);
+    const vector<int> get_nodes_vector();
+    const vector<pair<int,int>> get_edges_vector();
+    vector<char> get_transitions();
 
     // Writes the DFA to the given filepath.
     bool write_to_file(string filepath);

@@ -54,7 +54,7 @@ int main() {
     regex.convert_to_NFA();
     DFA dfa(regex.nfa);
 
-    cout << "Please input the filepath for the output" << endl;
+    cout << "Please input the filepath for the output (without the file extension)" << endl;
     cin >> output_file;
 
     // Writes the data to the specified path, checking if it was successful.
@@ -63,6 +63,9 @@ int main() {
     } else {
         cout << "Output could not be written in the provided path\n";
     }
+
+    dfa.graph(output_file);
+    regex.nfa.graph("NFA_graph");
 
     return 0;
 }

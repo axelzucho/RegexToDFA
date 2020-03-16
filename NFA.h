@@ -9,7 +9,13 @@
 #include <functional>
 #include <set>
 #include <string>
+#include <vector>
+#include <numeric>
 #include <unordered_map>
+
+//Boost for graphing
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graphviz.hpp>
 
 using namespace std;
 
@@ -53,7 +59,15 @@ public:
     // Returns if the file could be found.
     explicit NFA() = default;
 
+    unsigned long long get_state_amount();
+
     bool found_file();
+
+    //Graph the NFA
+    void graph(string output_file);
+    const vector<int> get_nodes_vector();
+    const vector<pair<int,int>> get_edges_vector();
+    vector<char> get_transitions();
 };
 
 #endif //NFA_TO_DFA_NFA_H
