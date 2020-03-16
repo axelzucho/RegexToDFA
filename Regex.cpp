@@ -11,7 +11,7 @@
 string insertConcatOp(const string &s) {
     string result;
 
-    for (int i = 0; i < s.length() - 1; i++) {
+    for (unsigned int i = 0; i < s.length() - 1; i++) {
         const char &current = s[i];
         result += current;
 

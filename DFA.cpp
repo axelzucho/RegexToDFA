@@ -106,7 +106,7 @@ void DFA::find_transitions() {
 void DFA::find_final_states() {
     // Iterates all states in the DFA.
     for (auto queued_state : this->queued_states) {
-        for (int i = 0; i < queued_state.size(); ++i) {
+        for (unsigned int i = 0; i < queued_state.size(); ++i) {
             if (queued_state[i] && this->nfa->final_states[i]) {
                 this->final_states.insert(queued_state);
                 break;
