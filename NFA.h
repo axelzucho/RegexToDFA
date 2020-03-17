@@ -64,10 +64,10 @@ public:
     bool found_file();
 
     //Graph the NFA
-    void graph(string output_file);
+    /*void graph(string output_file);
     const vector<int> get_nodes_vector();
     const vector<pair<int,int>> get_edges_vector();
-    vector<char> get_transitions();
+    vector<char> get_transitions();*/
 };
 
 #endif //NFA_TO_DFA_NFA_H

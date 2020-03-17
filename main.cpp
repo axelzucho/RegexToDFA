@@ -65,7 +65,7 @@ int main() {
     }
 
     dfa.graph(output_file);
-    regex.nfa.graph("NFA_graph");
+    //regex.nfa.graph("NFA_graph");
 
     return 0;
 }
