@@ -22,38 +22,49 @@
 
 using namespace std;
 
-class DFA {
+class DFA
+{
 private:
     // Hash function required for unordered_map with a pair of bitset and char as key.
-    struct pair_bitset_char_hash {
-        size_t operator()(const pair<bitset<128>, char> &k) const {
+    struct pair_bitset_char_hash
+    {
+        size_t operator()(const pair<bitset<128>, char> &k) const
+        {
             return hash<string>()(k.first.to_string() + k.second);
         }
     };
 
     // Hash function required for unordered_map with a bitset key.
-    struct bitset_hash {
-        bool operator()(const bitset<128> &k) const {
+    struct bitset_hash
+    {
+        bool operator()(const bitset<128> &k) const
+        {
             return (hash<string>()(k.to_string()));
         }
     };
 
     // Comparator function required for unordered_map with a pair of bitset and char as key.
-    struct pair_bitset_char_comparator {
-        bool operator()(const pair<bitset<128>, char> &a, const pair<bitset<128>, char> &b) const {
+    struct pair_bitset_char_comparator
+    {
+        bool operator()(const pair<bitset<128>, char> &a, const pair<bitset<128>, char> &b) const
+        {
             return a.first.to_ullong() < b.first.to_ullong();
         }
     };
 
     // Comparator function required for unordered_map with a bitset key.
-    struct bitset_comparator {
-        bool operator()(const bitset<128> &a, const bitset<128> &b) const {
+    struct bitset_comparator
+    {
+        bool operator()(const bitset<128> &a, const bitset<128> &b) const
+        {
             return a.to_ullong() < b.to_ullong();
         }
     };
 
-    struct bitset_equals {
-        bool operator()(const bitset<128> &a, const bitset<128> &b) const {
+    struct bitset_equals
+    {
+        bool operator()(const bitset<128> &a, const bitset<128> &b) const
+        {
             return a.to_ullong() == b.to_ullong();
         }
     };
@@ -106,7 +117,7 @@ public:
     //Graph the DFA
     void graph(string output_file);
     const vector<int> get_nodes_vector();
-    const vector<pair<int,int>> get_edges_vector();
+    const vector<pair<int, int>> get_edges_vector();
     vector<char> get_transitions();
 
     // Writes the DFA to the given filepath.
