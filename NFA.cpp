@@ -64,61 +64,84 @@ void NFA::add_edge(int initial_node, int final_node, char symbol) {
 bool NFA::found_file() {
     return opened_file;
 }
-/*
-unsigned long long NFA::get_state_amount() {
-  return state_amount;
-}
 
-//Returns a vector containing each node
 const vector<int> NFA::get_nodes_vector() {
-  vector<int> v(state_amount) ;
-  iota (begin(v), end(v), 0);
+  vector<int> v(state_amount);
+  iota(begin(v), end(v), 0);
   return v;
 }
 
-//Returns the start and end node of every edge as a vector of pairs
-const vector<pair<int,int>> NFA::get_edges_vector() {
-  vector<pair<int,int>> v;
-  for (const auto &transition : transitions) {
-      v.push_back(make_pair(translations[transition.first.first], translations[transition.second]));
-  }
+const vector<pair<int, int>> NFA::get_edges_vector() {
+  vector<pair<int, int>> v;
+
   return v;
 }
 
-//This returns a vector of transitions, each transition symbol refers to an edge in the edge vector
 vector<char> NFA::get_transitions() {
   vector<char> v;
-  for (const auto &transition : transitions) {
-      v.push_back(transition.first.second);
-  }
+
   return v;
 }
 
-void NFA::graph(string output_file) {
-  //Set up the nodes, edges, and transition symbols
-  const vector<int> nodes = get_nodes_vector();
-  const vector<pair<int,int>> edges_no_trans = get_edges_vector();
-  vector<char> transitions = get_transitions();
-  const int n_edges = edges_no_trans.size();
+void NFA::graph(string output_file)
+{
+    //Set up the nodes, edges, and transition symbols
+    const vector<int> nodes = get_nodes_vector();
+    const vector<pair<int, int>> edges_no_trans = get_edges_vector();   //The start and end states of each edge
+    vector<char> transitions = get_transitions();                       //The transition symbol for ^
+    const int n_edges = edges_no_trans.size();
+    unordered_set<int> final_states_set = get_final_states();           //For determining whether a state should be displayed with a double circle
 
-  typedef boost::property<boost::edge_weight_t, int> EdgeWeightProperty;
-  typedef boost::adjacency_list<boost::listS, boost::vecS, boost::directedS, boost::no_property, EdgeWeightProperty> DirectedGraph;
-  DirectedGraph g;
+    struct Vertex
+    {
+        int id;
+        string shape;
+    };
+    struct Edge
+    {
+        char weight;
+    };
 
-  //Populate the graph with the edges
-  for(int i = 0; i < n_edges; i++) {
-    add_edge(edges_no_trans[i].first, edges_no_trans[i].second, transitions[i], g);
-  }
+    //Contains all the info about the graph
+    typedef boost::adjacency_list<boost::listS, boost::vecS, boost::directedS, Vertex, Edge> DirectedGraph;
 
-  //Write graph to file
-  {
-    ofstream f(output_file + ".dot");
-    write_graphviz(f, g
-    );
-    f.close();
-  }
+    DirectedGraph g;
 
-  string dot_to_png = "dot -Tpng " + output_file + ".dot > " + output_file + ".png";
-  std::system(dot_to_png.c_str());
-  cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;
-}*/
+    //For determining which shape a state should assume (circle/double circle)
+    string vertex1_circle_shape;
+    string vertex2_circle_shape;
+
+    //Populate the graph with the edges
+    for (int i = 0; i < n_edges; i++)
+    {
+        //Determine the shape of the vertices (depending on whether they're final or not)
+        if(final_states_set.find(edges_no_trans[i].first) == final_states_set.end()) {
+          vertex1_circle_shape = "circle";        //If the state/vertex isn't found in the final state set
+        } else {
+          vertex1_circle_shape = "doublecircle";
+        }
+
+        if(final_states_set.find(edges_no_trans[i].second) == final_states_set.end()) {
+          vertex_circle_shape = "circle";
+        } else {
+          vertex_circle_shape = "doublecircle";
+        }
+        add_edge(add_vertex(Vertex{edges_no_trans[i].first, edge1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, edge2_circle_shape}, g), Edge{transitions[i]}, g);
+    }
+
+    //Write graph to file
+    {
+        ofstream f(output_file + ".dot");
+        boost::dynamic_properties dp;
+        dp.property("node_id", get(&Vertex::id, g));
+        dp.property("shape", get(&Vertex::shape, g));
+        dp.property("label", get(&Edge::weight, g));
+        write_graphviz_dp(f, g, dp);
+        f.close();
+    }
+
+    //Convert the .dot to .png
+    string dot_to_png = "dot -Tpng " + output_file + ".dot > " + output_file + ".png";
+    std::system(dot_to_png.c_str());
+    cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;
+}

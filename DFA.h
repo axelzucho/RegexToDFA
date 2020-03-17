@@ -13,6 +13,7 @@
 #include <vector>
 #include <numeric>
 #include <unordered_map>
+#include <unordered_set>
 
 //Boost for graphing
 #include <boost/graph/adjacency_list.hpp>
@@ -119,6 +120,7 @@ public:
     const vector<int> get_nodes_vector();
     const vector<pair<int, int>> get_edges_vector();
     vector<char> get_transitions();
+    unordered_set<int> get_final_states();
 
     // Writes the DFA to the given filepath.
     bool write_to_file(string filepath);
