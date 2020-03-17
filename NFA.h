@@ -71,6 +71,7 @@ public:
     const vector<int> get_nodes_vector();
     const vector<pair<int,int>> get_edges_vector();
     vector<char> get_transitions();
+    unordered_set<int> get_final_states();
 };
 
 #endif //NFA_TO_DFA_NFA_H

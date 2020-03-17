@@ -271,11 +271,11 @@ void DFA::graph(string output_file)
         }
 
         if(final_states_set.find(edges_no_trans[i].second) == final_states_set.end()) {
-          vertex_circle_shape = "circle";
+          vertex2_circle_shape = "circle";
         } else {
-          vertex_circle_shape = "doublecircle";
+          vertex2_circle_shape = "doublecircle";
         }
-        add_edge(add_vertex(Vertex{edges_no_trans[i].first, edge1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, edge2_circle_shape}, g), Edge{transitions[i]}, g);
+        add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{transitions[i]}, g);
     }
 
     //Write graph to file

@@ -73,7 +73,10 @@ const vector<int> NFA::get_nodes_vector() {
 
 const vector<pair<int, int>> NFA::get_edges_vector() {
   vector<pair<int, int>> v;
-
+  //for (auto& it: transitions) {
+    //cout << it.first.first << " " << it.first.second;
+    //cout << it.first.second.to_string();
+  //}
   return v;
 }
 
@@ -83,12 +86,18 @@ vector<char> NFA::get_transitions() {
   return v;
 }
 
+unordered_set<int> NFA::get_final_states() {
+  unordered_set<int> final_set;
+
+  return final_set;
+}
+
 void NFA::graph(string output_file)
 {
     //Set up the nodes, edges, and transition symbols
     const vector<int> nodes = get_nodes_vector();
     const vector<pair<int, int>> edges_no_trans = get_edges_vector();   //The start and end states of each edge
-    vector<char> transitions = get_transitions();                       //The transition symbol for ^
+    /*vector<char> transitions = get_transitions();                       //The transition symbol for ^
     const int n_edges = edges_no_trans.size();
     unordered_set<int> final_states_set = get_final_states();           //For determining whether a state should be displayed with a double circle
 
@@ -143,5 +152,5 @@ void NFA::graph(string output_file)
     //Convert the .dot to .png
     string dot_to_png = "dot -Tpng " + output_file + ".dot > " + output_file + ".png";
     std::system(dot_to_png.c_str());
-    cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;
+    cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;*/
 }
