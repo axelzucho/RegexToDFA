@@ -19,11 +19,14 @@
 
 using namespace std;
 
-class NFA {
+class NFA
+{
 private:
     // Hash function required for unordered_map with a pair of unsigned long long and char.
-    struct pair_llu_char_hash {
-        size_t operator()(const pair<unsigned long long, char> &k) const {
+    struct pair_llu_char_hash
+    {
+        size_t operator()(const pair<unsigned long long, char> &k) const
+        {
             return (hash<string>()(to_string(k.first) + k.second));
         }
     };

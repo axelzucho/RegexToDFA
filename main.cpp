@@ -43,7 +43,8 @@ using namespace std;
 }
 */
 
-int main() {
+int main()
+{
     string input_file;
     string output_file;
 
@@ -58,9 +59,12 @@ int main() {
     cin >> output_file;
 
     // Writes the data to the specified path, checking if it was successful.
-    if (dfa.write_to_file(output_file)) {
+    if (dfa.write_to_file(output_file))
+    {
         cout << "Output written successfully!\n";
-    } else {
+    }
+    else
+    {
         cout << "Output could not be written in the provided path\n";
     }
 
