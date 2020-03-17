@@ -72,6 +72,9 @@ public:
     const vector<pair<int,int>> get_edges_vector();
     vector<char> get_transitions();
     unordered_set<int> get_final_states();
+
+    //REMOVE ME
+    void print_out_transitions ();
 };
 
 #endif //NFA_TO_DFA_NFA_H

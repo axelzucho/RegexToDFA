@@ -68,8 +68,7 @@ int main()
         cout << "Output could not be written in the provided path\n";
     }
 
-    dfa.graph(output_file);
-    //regex.nfa.graph("NFA_graph");
+    //regex.nfa.graph(output_file);
 
     return 0;
 }

@@ -73,10 +73,7 @@ const vector<int> NFA::get_nodes_vector() {
 
 const vector<pair<int, int>> NFA::get_edges_vector() {
   vector<pair<int, int>> v;
-  //for (auto& it: transitions) {
-    //cout << it.first.first << " " << it.first.second;
-    //cout << it.first.second.to_string();
-  //}
+
   return v;
 }
 
@@ -88,16 +85,35 @@ vector<char> NFA::get_transitions() {
 
 unordered_set<int> NFA::get_final_states() {
   unordered_set<int> final_set;
-
+  for(unsigned int i = 0; i < state_amount; i++) {
+    if(final_states[i] & (1 << i )) {
+      final_set.insert(i);
+    }
+  }
   return final_set;
+}
+
+//REMOVE ME
+void NFA::print_out_transitions () {
+  for (const auto& elem: transitions) {
+    cout << elem.first.first << " " << elem.first.second << endl;
+    for(unsigned int i = 0; i < state_amount; i++) {
+      cout << elem.second[i] << " ";
+    }
+    cout << endl;
+}
+
+  cout << endl;
 }
 
 void NFA::graph(string output_file)
 {
+  try {
+    print_out_transitions();
     //Set up the nodes, edges, and transition symbols
     const vector<int> nodes = get_nodes_vector();
     const vector<pair<int, int>> edges_no_trans = get_edges_vector();   //The start and end states of each edge
-    /*vector<char> transitions = get_transitions();                       //The transition symbol for ^
+    vector<char> transitions = get_transitions();                       //The transition symbol for ^
     const int n_edges = edges_no_trans.size();
     unordered_set<int> final_states_set = get_final_states();           //For determining whether a state should be displayed with a double circle
 
@@ -131,11 +147,11 @@ void NFA::graph(string output_file)
         }
 
         if(final_states_set.find(edges_no_trans[i].second) == final_states_set.end()) {
-          vertex_circle_shape = "circle";
+          vertex2_circle_shape = "circle";
         } else {
-          vertex_circle_shape = "doublecircle";
+          vertex2_circle_shape = "doublecircle";
         }
-        add_edge(add_vertex(Vertex{edges_no_trans[i].first, edge1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, edge2_circle_shape}, g), Edge{transitions[i]}, g);
+        boost::add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{transitions[i]}, g);
     }
 
     //Write graph to file
@@ -152,5 +168,9 @@ void NFA::graph(string output_file)
     //Convert the .dot to .png
     string dot_to_png = "dot -Tpng " + output_file + ".dot > " + output_file + ".png";
     std::system(dot_to_png.c_str());
-    cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;*/
+    cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;
+  }
+  catch (const std::invalid_argument& e){
+    cout << "Calm down, I'm working on it!" << endl;
+  }
 }
