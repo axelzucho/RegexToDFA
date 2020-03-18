@@ -13,10 +13,12 @@
 
 using namespace std;
 
-class Regex {
+class Regex
+{
 private:
     // All operators are applied to NodeGroups and return a single NodeGroup.
-    struct NodeGroup {
+    struct NodeGroup
+    {
         int initial_node;
         int final_node;
     };

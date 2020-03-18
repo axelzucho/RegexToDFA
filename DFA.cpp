@@ -42,8 +42,7 @@ DFA::DFA(NFA &nfa)
 void DFA::set_epsilon_path(bitset<12345> &states, unsigned long long state_to_add)
 {
     // Inserts the state to add into the bitset.
-    // states[state_to_add] = 1;
-    states |= (1 << state_to_add);
+    states[state_to_add] = 1;
 
     // Iterates all the states that can be reached with an epsilon movement.
     bitset<12345> reachable_states = this->nfa->transitions[make_pair(state_to_add, '~')];
@@ -95,8 +94,7 @@ void DFA::find_transitions()
                     for (unsigned long long j = 0; j < accessible_states.size(); ++j)
                     {
                         if (accessible_states[j])
-                            new_states |= (1 << j);
-                        // new_states[j] = 1;
+                            new_states[j] = 1;
                     }
                 }
             }
@@ -309,13 +307,18 @@ void DFA::graph(string output_file)
     cout << "Graph exported as " << output_file << ".png" << endl;
 }
 
-bool DFA::checkIfValid(const string& chain) {
-    bitset<128> node = initial_state;
+bool DFA::checkIfValid(const string &chain)
+{
+    bitset<12345> node = initial_state;
 
-    for(const char& c:chain){
-        if(transitions.find({node, c}) == transitions.end()) {
+    for (const char &c : chain)
+    {
+        if (transitions.find({node, c}) == transitions.end())
+        {
             return false;
-        } else {
+        }
+        else
+        {
             node = transitions[{node, c}];
         }
     }

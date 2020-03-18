@@ -78,7 +78,7 @@ private:
     {
         bool operator()(const pair<bitset<12345>, char> &a, const pair<bitset<12345>, char> &b) const
         {
-            return a.first.to_ullong() == b.first.to_ullong() && a.second == b.second;
+            return is_a_equal_to_b(a.first, b.first) && a.second == b.second;
         }
     };
 
@@ -87,7 +87,7 @@ private:
     {
         bool operator()(const bitset<12345> &a, const bitset<12345> &b) const
         {
-            return is_a_bigger_than_b(a, b);
+            return is_a_bigger_than_b(b, a);
         }
     };
 
@@ -95,7 +95,7 @@ private:
     {
         bool operator()(const bitset<12345> &a, const bitset<12345> &b) const
         {
-            return is_a_equal_to_b(a, b);
+            return a.to_string() == b.to_string();
         }
     };
 
@@ -109,7 +109,7 @@ private:
     set<char> alphabet;
 
     // A set of sets, in which each set will be one final state.
-    set<bitset<12345>, bitset_equals> final_states;
+    set<bitset<12345>, bitset_comparator> final_states;
 
     // A set that indicates the initial state for the DFA.
     bitset<12345> initial_state;
@@ -121,7 +121,7 @@ private:
     unordered_map<bitset<12345>, unsigned long long, bitset_hash, bitset_equals> translations;
 
     // A set of sets that show all the states already processed or that were already found to be processed.
-    set<bitset<12345>, bitset_equals> queued_states;
+    set<bitset<12345>, bitset_comparator> queued_states;
 
     // A queue of states which are yet to process.
     queue<bitset<12345>> states_to_search;

@@ -136,9 +136,8 @@ void Regex::convert_to_NFA()
         }
     }
     this->nfa.initial_node = (unsigned long long)node_groups.top().initial_node;
-    this->nfa.final_states = bitset<12345>(1 << node_groups.top().final_node);
-    // this->nfa.final_states = bitset<12345>();
-    // this->nfa.final_states[node_groups.top().final_node] = 1;
+    this->nfa.final_states = bitset<12345>();
+    this->nfa.final_states[node_groups.top().final_node] = 1;
     this->nfa.state_amount = (unsigned long long)this->next_index;
 }
 

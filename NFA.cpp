@@ -35,10 +35,7 @@ NFA::NFA(const string &filepath)
   {
     unsigned long long state;
     file >> state;
-    // TODO (for 1 << 12345 which bitset currently supports we need boost/multiprecision)
-    // https://stackoverflow.com/questions/35506314/c-shift-left-with-big-value
-    // this->final_states[state] = 1;
-    this->final_states |= (1 << state);
+    this->final_states[state] = 1;
   }
 
   unsigned long long transition_amount;
@@ -63,8 +60,7 @@ void NFA::add_edge(unsigned long long initial_node, unsigned long long final_nod
 {
   pair<unsigned long long, char> key = make_pair(initial_node, symbol);
   // Add the new destination to the bitset.
-  // this->transitions[key][final_node] = 1;
-  this->transitions[key] |= (1 << final_node);
+  this->transitions[key][final_node] = 1;
 }
 
 bool NFA::found_file()
