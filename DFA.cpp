@@ -205,6 +205,7 @@ const vector<int> DFA::get_nodes_vector()
 const vector<pair<int, int>> DFA::get_edges_vector()
 {
     vector<pair<int, int>> v;
+    //For each transition, get the initial and final nodes
     for (const auto &transition : transitions)
     {
         v.push_back(make_pair(translations[transition.first.first], translations[transition.second]));
@@ -214,6 +215,7 @@ const vector<pair<int, int>> DFA::get_edges_vector()
 
 unordered_set<int> DFA::get_final_states() {
   unordered_set<int> final_set;
+  //For each final set, push it in to our set
   for (const auto &final_state : final_states)
   {
       final_set.insert(this->translations[final_state]);
@@ -225,6 +227,7 @@ unordered_set<int> DFA::get_final_states() {
 vector<char> DFA::get_transitions()
 {
     vector<char> v;
+    //For each transition, push te symbol
     for (const auto &transition : transitions)
     {
         v.push_back(transition.first.second);
@@ -237,7 +240,7 @@ void DFA::graph(string output_file)
     //Set up the nodes, edges, and transition symbols
     const vector<int> nodes = get_nodes_vector();
     const vector<pair<int, int>> edges_no_trans = get_edges_vector();   //The start and end states of each edge
-    vector<char> transitions = get_transitions();                       //The transition symbol for ^
+    vector<char> transitions = get_transitions();                       //The transition symbol for each edge
     const int n_edges = edges_no_trans.size();
     unordered_set<int> final_states_set = get_final_states();           //For determining whether a state should be displayed with a double circle
 

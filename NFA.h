@@ -73,9 +73,14 @@ public:
 
     //Graph the NFA
     void graph(string output_file);
+
+    //Returns a vector of nodes in the NFA
     const vector<int> get_nodes_vector();
+
+    //Returns a vector of start and end node pairs along with their transition symbols
     edge_transitions get_edges_vector();
-    vector<char> get_transitions();
+
+    //Returns a vector of nodes that are final states    
     unordered_set<int> get_final_states();
 };
 

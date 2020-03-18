@@ -117,9 +117,17 @@ public:
 
     //Graph the DFA
     void graph(string output_file);
+
+    //Returns a vector of nodes in the DFA
     const vector<int> get_nodes_vector();
+
+    //Returns a vector of start and end node pairs
     const vector<pair<int, int>> get_edges_vector();
+
+    //Returns a vector of transition symbols
     vector<char> get_transitions();
+
+    //Returns the nodes that are final states
     unordered_set<int> get_final_states();
 
     // Writes the DFA to the given filepath.

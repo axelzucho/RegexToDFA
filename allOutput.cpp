@@ -37,8 +37,8 @@ int main(int argc, char* argv[])
     {
         cout << "Output could not be written in the provided path\n";
     }
-
-    dfa.graph(output_file);
+    regex.nfa.graph(output_file + "_NFA");
+    dfa.graph(output_file + "_DFA");
     //regex.nfa.graph("NFA_graph");
     auto stop = high_resolution_clock::now();
 
@@ -48,4 +48,3 @@ int main(int argc, char* argv[])
     return 0;
 
 }
-

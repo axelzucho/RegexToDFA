@@ -19,7 +19,7 @@ After running it, you will find three executables:
 
 We will show an example of how to run the third listed executable; with all outputs.
 
-To run it, use the following command inside the downloaded directory: 
+To run it, use the following command inside the downloaded directory:
 `./all_output.out [input_file_path] [output_file_path]`
 
 For example, with the first Regex example:
@@ -36,7 +36,7 @@ You will then see several outputs in the console, including the time it took to 
 
 The input file format should be a well formed regex with the character '~' denoting epsilon.
 Whitespaces would count as characters, so don't put any whitespaces if not needed.
-The following are valid operators and won't be considered as part of the alphabet: 
+The following are valid operators and won't be considered as part of the alphabet:
 * '|' : OR operator
 * '*' : Star operator
 * '(' : Grouping (should be matched with the closed brackets)
@@ -67,7 +67,7 @@ The output text file would be as follows (each part wll be written with a newlin
 
 ## Output graphs
 
-The output graphs will be in the provided output path and for both NFA and DFA representation of the given Regex. 
+The output graphs will be in the provided output path and for both NFA and DFA representation of the given Regex.
 There are also examples of this output in the `example_outputs` directory.
 
 ## Authors
