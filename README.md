@@ -63,12 +63,18 @@ The output text file would be as follows (each part wll be written with a newlin
     1. Initial node
     2. Final node
     3. Symbol
-
+    
+It will be saved in the provided output with the ".txt" string appended.
 
 ## Output graphs
 
 The output graphs will be in the provided output path and for both NFA and DFA representation of the given Regex.
 There are also examples of this output in the `example_outputs` directory.
+
+The NFA graph will be saved in the provided output path with "_NFA.png" appended. 
+The DFA graph will be saved in the provided output path with "_DFA.png" appended.
+
+In the NFA representation, the `~` character represents the epsilon movements.
 
 ## Authors
 
