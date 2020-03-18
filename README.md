@@ -47,6 +47,7 @@ The following are valid operators and won't be considered as part of the alphabe
 * '*' : Star operator
 * '(' : Grouping (should be matched with the closed brackets)
 * ')' : Closing the group.
+* '.' : This character isn't supported in graphing, but it would still generate the correct DFA to evaluate. In the example4 for floating numbers, we are using the character ',' instead to be able to graph the result.
 
 There are several examples of this format in the `regex_examples/` directory.
 
