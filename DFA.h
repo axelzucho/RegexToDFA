@@ -26,10 +26,39 @@ using namespace std;
 class DFA
 {
 private:
+    static bool is_a_bigger_than_b(const bitset<12345> &a, const bitset<12345> &b)
+    {
+        for (long long i = b.size() - 1; i >= 0; i--)
+        {
+            if (a[i] != b[i])
+            {
+                if (a[i])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    static bool is_a_equal_to_b(const bitset<12345> &a, const bitset<12345> &b)
+    {
+        for (long long i = b.size() - 1; i >= 0; i--)
+        {
+            if (a[i] != b[i])
+                return false;
+        }
+        return true;
+    }
+
     // Hash function required for unordered_map with a pair of bitset and char as key.
     struct pair_bitset_char_hash
     {
-        size_t operator()(const pair<bitset<128>, char> &k) const
+        size_t operator()(const pair<bitset<12345>, char> &k) const
         {
             return hash<string>()(k.first.to_string() + k.second);
         }
@@ -38,7 +67,7 @@ private:
     // Hash function required for unordered_map with a bitset key.
     struct bitset_hash
     {
-        bool operator()(const bitset<128> &k) const
+        bool operator()(const bitset<12345> &k) const
         {
             return (hash<string>()(k.to_string()));
         }
@@ -47,26 +76,26 @@ private:
     // Comparator function required for unordered_map with a pair of bitset and char as key.
     struct pair_bitset_char_comparator
     {
-        bool operator()(const pair<bitset<128>, char> &a, const pair<bitset<128>, char> &b) const
+        bool operator()(const pair<bitset<12345>, char> &a, const pair<bitset<12345>, char> &b) const
         {
-            return a.first.to_ullong() == b.first.to_ullong() && a.second == b.second;
+            return is_a_equal_to_b(a.first, b.first) && a.second == b.second;
         }
     };
 
     // Comparator function required for unordered_map with a bitset key.
     struct bitset_comparator
     {
-        bool operator()(const bitset<128> &a, const bitset<128> &b) const
+        bool operator()(const bitset<12345> &a, const bitset<12345> &b) const
         {
-            return a.to_ullong() < b.to_ullong();
+            return is_a_bigger_than_b(b, a);
         }
     };
 
     struct bitset_equals
     {
-        bool operator()(const bitset<128> &a, const bitset<128> &b) const
+        bool operator()(const bitset<12345> &a, const bitset<12345> &b) const
         {
-            return a.to_ullong() == b.to_ullong();
+            return a.to_string() == b.to_string();
         }
     };
 
@@ -80,28 +109,28 @@ private:
     set<char> alphabet;
 
     // A set of sets, in which each set will be one final state.
-    set<bitset<128>, bitset_comparator> final_states;
+    set<bitset<12345>, bitset_comparator> final_states;
 
     // A set that indicates the initial state for the DFA.
-    bitset<128> initial_state;
+    bitset<12345> initial_state;
 
     // A dictionary that maps a pair of a state and a symbol to another state.
-    unordered_map<pair<bitset<128>, char>, bitset<128>, pair_bitset_char_hash, pair_bitset_char_comparator> transitions;
+    unordered_map<pair<bitset<12345>, char>, bitset<12345>, pair_bitset_char_hash, pair_bitset_char_comparator> transitions;
 
     // A dictionary that maps the translations between a state, represented by a set, to an int.
-    unordered_map<bitset<128>, unsigned long long, bitset_hash, bitset_equals> translations;
+    unordered_map<bitset<12345>, unsigned long long, bitset_hash, bitset_equals> translations;
 
     // A set of sets that show all the states already processed or that were already found to be processed.
-    set<bitset<128>, bitset_comparator> queued_states;
+    set<bitset<12345>, bitset_comparator> queued_states;
 
     // A queue of states which are yet to process.
-    queue<bitset<128>> states_to_search;
+    queue<bitset<12345>> states_to_search;
 
     // Function that adds the epsilon paths from a given states to the given set of states.
-    void set_epsilon_path(bitset<128> &states, unsigned long long state_to_add);
+    void set_epsilon_path(bitset<12345> &states, unsigned long long state_to_add);
 
     // Function that adds all epsilon paths all the states in the given set.
-    void set_epsilon_path(bitset<128> &states_no_epsilon);
+    void set_epsilon_path(bitset<12345> &states_no_epsilon);
 
     // Finds all the transitions from the given nfa.
     void find_transitions();
@@ -119,22 +148,22 @@ public:
     void graph(string output_file);
 
     //Returns a vector of nodes in the DFA
-    const vector<int> get_nodes_vector();
+    const vector<unsigned long long> get_nodes_vector();
 
     //Returns a vector of start and end node pairs
-    const vector<pair<int, int>> get_edges_vector();
+    const vector<pair<unsigned long long, unsigned long long>> get_edges_vector();
 
     //Returns a vector of transition symbols
     vector<char> get_transitions();
 
     //Returns the nodes that are final states
-    unordered_set<int> get_final_states();
+    unordered_set<unsigned long long> get_final_states();
 
     // Writes the DFA to the given filepath.
     bool write_to_file(string filepath);
 
     // Checks if a given chain is valid for the DFA.
-    bool checkIfValid(const string& chain);
+    bool checkIfValid(const string &chain);
 };
 
 #endif //NFA_TO_DFA_DFA_H

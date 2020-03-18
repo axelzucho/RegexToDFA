@@ -33,11 +33,9 @@ NFA::NFA(const string &filepath)
   // Iterates for each of the final states and adds them to the vector.
   for (unsigned long long i = 0; i < final_state_amount; ++i)
   {
-    int state;
+    unsigned long long state;
     file >> state;
-    // TODO (for 1 << 128 which bitset currently supports we need boost/multiprecision)
-    // https://stackoverflow.com/questions/35506314/c-shift-left-with-big-value
-    this->final_states |= (1 << state);
+    this->final_states[state] = 1;
   }
 
   unsigned long long transition_amount;
@@ -46,7 +44,7 @@ NFA::NFA(const string &filepath)
   // Iterates for each transition in the NFA.
   for (unsigned long long i = 0; i < transition_amount; ++i)
   {
-    int initial_node, final_node;
+    unsigned long long initial_node, final_node;
     char symbol;
     // Gets the transition data from the file.
     file >> initial_node >> final_node >> symbol;
@@ -58,11 +56,11 @@ NFA::NFA(const string &filepath)
   file.close();
 }
 
-void NFA::add_edge(int initial_node, int final_node, char symbol)
+void NFA::add_edge(unsigned long long initial_node, unsigned long long final_node, char symbol)
 {
-  pair<int, char> key = make_pair(initial_node, symbol);
+  pair<unsigned long long, char> key = make_pair(initial_node, symbol);
   // Add the new destination to the bitset.
-  this->transitions[key] |= (1 << final_node);
+  this->transitions[key][final_node] = 1;
 }
 
 bool NFA::found_file()
@@ -71,9 +69,9 @@ bool NFA::found_file()
 }
 
 //Get a vector of nodes
-const vector<int> NFA::get_nodes_vector()
+const vector<unsigned long long> NFA::get_nodes_vector()
 {
-  vector<int> v(state_amount);
+  vector<unsigned long long> v(state_amount);
   iota(begin(v), end(v), 0); //Generate a vector of consecutive integers
   return v;
 }
@@ -85,10 +83,10 @@ edge_transitions NFA::get_edges_vector()
   //For each element in the transitions map
   for (const auto &elem : transitions)
   {
-    int currentNode = elem.first.first;
+    unsigned long long currentNode = elem.first.first;
     char transition = elem.first.second;
     //A 1 in the bitset indicates a transition to that node
-    for (unsigned int i = 0; i < state_amount; i++)
+    for (unsigned long long i = 0; i < state_amount; i++)
     {
       if (elem.second[i])
       {
@@ -101,10 +99,10 @@ edge_transitions NFA::get_edges_vector()
 }
 
 //Returns a vector of final states
-unordered_set<int> NFA::get_final_states()
+unordered_set<unsigned long long> NFA::get_final_states()
 {
-  unordered_set<int> final_set;
-  for (unsigned int i = 0; i < state_amount; i++)
+  unordered_set<unsigned long long> final_set;
+  for (unsigned long long i = 0; i < state_amount; i++)
   {
     //A 1 in the bitset means the node is final
     if (final_states[i])
@@ -118,10 +116,10 @@ unordered_set<int> NFA::get_final_states()
 void NFA::graph(string output_file)
 {
   //Set up the nodes, edges, and transition symbols
-  const vector<int> nodes = get_nodes_vector();
-  edge_transitions edges_trans = get_edges_vector();        //The start and end states of each edge along with its transition
-  const int n_edges = edges_trans.edges_vector.size();      //Number of edges
-  unordered_set<int> final_states_set = get_final_states(); //For determining whether a state should be displayed with a double circle
+  const vector<unsigned long long> nodes = get_nodes_vector();
+  edge_transitions edges_trans = get_edges_vector();                       //The start and end states of each edge along with its transition
+  const unsigned long long n_edges = edges_trans.edges_vector.size();      //Number of edges
+  unordered_set<unsigned long long> final_states_set = get_final_states(); //For determining whether a state should be displayed with a double circle
 
   /*
     for(int i = 0; i < n_edges; i++) {
