@@ -133,7 +133,7 @@ void NFA::graph(string output_file)
   };
   struct Edge
   {
-    char weight;
+    string weight;
   };
 
   //Contains all the info about the graph
@@ -166,7 +166,7 @@ void NFA::graph(string output_file)
     {
       vertex2_circle_shape = "doublecircle";
     }
-    boost::add_edge(add_vertex(Vertex{edges_trans.edges_vector[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_trans.edges_vector[i].second, vertex2_circle_shape}, g), Edge{edges_trans.transitions_vector[i]}, g);
+    boost::add_edge(add_vertex(Vertex{edges_trans.edges_vector[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_trans.edges_vector[i].second, vertex2_circle_shape}, g), Edge{"\"" + string(1, edges_trans.transitions_vector[i]) + "\""}, g);
   }
 
   //Write graph to file

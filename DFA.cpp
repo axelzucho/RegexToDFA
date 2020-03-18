@@ -252,7 +252,7 @@ void DFA::graph(string output_file)
     };
     struct Edge
     {
-        char weight;
+        string weight;
     };
 
     //Contains all the info about the graph
@@ -285,7 +285,7 @@ void DFA::graph(string output_file)
         {
             vertex2_circle_shape = "doublecircle";
         }
-        add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{transitions[i]}, g);
+        add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{"\"" + string(1, transitions[i]) + "\""}, g);
     }
 
     //Write graph to file
