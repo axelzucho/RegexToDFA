@@ -80,8 +80,6 @@ Regex::Regex(const string &filepath) {
             {'*',       3}};
 
     this->postfix_form = convertToPostfix(this->infix_form, precedence);
-    cout << "Prefix: " << this->infix_form << "\n";
-    cout << "Postfix: " << this->postfix_form << "\n";
 }
 
 bool isOperator(const char &op) {

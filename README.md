@@ -1,4 +1,4 @@
-# NFA to DFA Converter
+# Regex to DFA Converter
 
 ## Description
 
@@ -8,31 +8,45 @@ A simple, efficient, and thoroughly commented C++ program that converts a given 
 
 Before starting, make sure you have graphviz and boost intalled.  If not, run `sudo apt-get install graphviz` and `sudo apt-get install libboost-dev` respectively.
 
-After downloading, run `make` in the downloaded directory.
+After downloading, run `make all` in the downloaded directory.
 
 ![alt text](README_images/make.png)
 
-After running it, you will find the executable 'regex_conversion.out'. To run it, execute the command `./regex_conversion.out`.
+After running it, you will find three executables:
+1. 'no_output.out': This executable will only convert the Regex to a DFA but doesn't have output.
+2. 'text_output.out': This executable will convert the Regex to a DFA and output a text file with the expected DFA.
+3. 'all_output.out': This executable will convert the Regex to a DFA, output a text file with the expected DFA and graph both the equivalent NFA and DFA.
+
+We will show an example of how to run the third listed executable; with all outputs.
+
+To run it, use the following command inside the downloaded directory: 
+`./all_output.out [input_file_path] [output_file_path]`
+
+For example, with the first Regex example:
+
+`./all_output.out regex_examples/regex_example1.txt my_output`
 
 ![alt text](README_images/run.png)
 
-It will then ask you to input two strings:
-
-1. The path of the input file. An example of a valid input is: `regex_example.txt`.
-
-    ![alt text](README_images/input_filepath.png)
-
-2. The path of the output file. An example of a valid input is: `DFA_solution.txt`.
-
-    ![alt text](README_images/output_filepath.png)
-
-You will then see the message `Output written successfully!` if the execution was successful.
+You will then see several outputs in the console, including the time it took to execute the program.
 
 ![alt text](README_images/result.png)
 
-## Input file format
+## Input regex format
 
-The input file should be as follows (each part should be written with a newline character):
+The input file format should be a well formed regex with the character '~' denoting epsilon.
+Whitespaces would count as characters, so don't put any whitespaces if not needed.
+The following are valid operators and won't be considered as part of the alphabet: 
+* '|' : OR operator
+* '*' : Star operator
+* '(' : Grouping (should be matched with the closed brackets)
+* ')' : Closing the group.
+
+There are several examples of this format in the `regex_examples/` directory.
+
+## Output text file format
+
+The output text file would be as follows (each part wll be written with a newline character):
 
 1. __State amount__: The number of states the automata has. An example of a valid input is `10`.
     * The actual states will be considered to start at 0.
@@ -50,21 +64,14 @@ The input file should be as follows (each part should be written with a newline 
     2. Final node
     3. Symbol
 
-    An epsilon movement should be specified with the character `~`.
 
-    Examples of valid transitions are as follows:
+## Output graphs
 
-   1. 0 1 ~
-   2. 0 3 ~
-   3. 1 2 a
+The output graphs will be in the provided output path and for both NFA and DFA representation of the given Regex. 
+There are also examples of this output in the `example_outputs` directory.
 
-
-There is also an example of this file format in the `NFA_example.txt` file in the project directory.    
-
-## Output
-
-The output will be written in the specified path and will have the same format as the input file.
-
-## Author
+## Authors
 
 Axel Zuchovicki - ITESM CSF
+Kevin Woo - ITESM CSF
+Eric 'el Michael' Parton - ITESM CSF
