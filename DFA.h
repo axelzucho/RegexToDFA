@@ -49,7 +49,7 @@ private:
     {
         bool operator()(const pair<bitset<128>, char> &a, const pair<bitset<128>, char> &b) const
         {
-            return a.first.to_ullong() < b.first.to_ullong();
+            return a.first.to_ullong() == b.first.to_ullong() && a.second == b.second;
         }
     };
 
@@ -132,6 +132,9 @@ public:
 
     // Writes the DFA to the given filepath.
     bool write_to_file(string filepath);
+
+    // Checks if a given chain is valid for the DFA.
+    bool checkIfValid(const string& chain);
 };
 
 #endif //NFA_TO_DFA_DFA_H

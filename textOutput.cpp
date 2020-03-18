@@ -42,6 +42,25 @@ int main(int argc, char* argv[])
     auto time_span = duration_cast<duration<double>>(stop - start);
     cout << "Took " << time_span.count() << " seconds to convert from Regex to DFA and to write the text output.\n";
 
-    return 0;
+    while(true) {
+        string chain;
+        cout << "Enter a string to evaluate. If you want to exit, enter 'exit'\n";
+        cin >> chain;
+        start = high_resolution_clock::now();
+        if(chain == "exit") {
+            break;
+        } else {
+            if(dfa.checkIfValid(chain)) {
+                stop = high_resolution_clock::now();
+                cout << "Valid chain\n";
+            } else {
+                stop = high_resolution_clock::now();
+                cout << "Invalid chain\n";
+            }
+        }
+        time_span = duration_cast<duration<double>>(stop - start);
+        cout << "Took " << time_span.count() << " seconds to check the given string.\n";
+    }
 
+    return 0;
 }

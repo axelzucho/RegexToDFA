@@ -299,3 +299,17 @@ void DFA::graph(string output_file)
     remove(remove_dot.c_str());
     cout << "Graph exported as " << output_file << ".png" << endl;
 }
+
+bool DFA::checkIfValid(const string& chain) {
+    bitset<128> node = initial_state;
+
+    for(const char& c:chain){
+        if(transitions.find({node, c}) == transitions.end()) {
+            return false;
+        } else {
+            node = transitions[{node, c}];
+        }
+    }
+
+    return final_states.find(node) != final_states.end();
+}
