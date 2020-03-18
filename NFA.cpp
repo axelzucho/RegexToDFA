@@ -122,7 +122,7 @@ void NFA::graph(string output_file)
   unordered_set<unsigned long long> final_states_set = get_final_states(); //For determining whether a state should be displayed with a double circle
 
   /*
-    for(int i = 0; i < n_edges; i++) {
+    for(unsigned long long i = 0; i < n_edges; i++) {
       cout << edges_trans.edges_vector[i].first << " " << edges_trans.edges_vector[i].second << " " << edges_trans.transitions_vector[i] << endl;
     }*/
 
