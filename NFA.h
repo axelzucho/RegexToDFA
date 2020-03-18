@@ -19,6 +19,11 @@
 
 using namespace std;
 
+typedef struct edge_transitions {
+  vector<pair<int, int>> edges_vector;
+  vector<char> transitions_vector;
+} edge_transitions;
+
 class NFA
 {
 private:
@@ -69,12 +74,9 @@ public:
     //Graph the NFA
     void graph(string output_file);
     const vector<int> get_nodes_vector();
-    const vector<pair<int,int>> get_edges_vector();
+    edge_transitions get_edges_vector();
     vector<char> get_transitions();
     unordered_set<int> get_final_states();
-
-    //REMOVE ME
-    void print_out_transitions ();
 };
 
 #endif //NFA_TO_DFA_NFA_H

@@ -292,5 +292,7 @@ void DFA::graph(string output_file)
     //Convert the .dot to .png
     string dot_to_png = "dot -Tpng " + output_file + ".dot > " + output_file + ".png";
     std::system(dot_to_png.c_str());
-    cout << "Graph exported as " << output_file << ".dot and " << output_file << ".png" << endl;
+    string remove_dot = output_file + ".dot";
+    remove(remove_dot.c_str());
+    cout << "Graph exported as " << output_file << ".png" << endl;
 }
