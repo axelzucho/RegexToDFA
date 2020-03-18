@@ -213,14 +213,15 @@ const vector<pair<int, int>> DFA::get_edges_vector()
     return v;
 }
 
-unordered_set<int> DFA::get_final_states() {
-  unordered_set<int> final_set;
-  //For each final set, push it in to our set
-  for (const auto &final_state : final_states)
-  {
-      final_set.insert(this->translations[final_state]);
-  }
-  return final_set;
+unordered_set<int> DFA::get_final_states()
+{
+    unordered_set<int> final_set;
+    //For each final set, push it in to our set
+    for (const auto &final_state : final_states)
+    {
+        final_set.insert(this->translations[final_state]);
+    }
+    return final_set;
 }
 
 //This returns a vector of transitions, each transition symbol refers to an edge in the edge vector
@@ -239,19 +240,19 @@ void DFA::graph(string output_file)
 {
     //Set up the nodes, edges, and transition symbols
     const vector<int> nodes = get_nodes_vector();
-    const vector<pair<int, int>> edges_no_trans = get_edges_vector();   //The start and end states of each edge
-    vector<char> transitions = get_transitions();                       //The transition symbol for each edge
+    const vector<pair<int, int>> edges_no_trans = get_edges_vector(); //The start and end states of each edge
+    vector<char> transitions = get_transitions();                     //The transition symbol for each edge
     const int n_edges = edges_no_trans.size();
-    unordered_set<int> final_states_set = get_final_states();           //For determining whether a state should be displayed with a double circle
+    unordered_set<int> final_states_set = get_final_states(); //For determining whether a state should be displayed with a double circle
 
     struct Vertex
     {
-        int id;
+        unsigned long long id;
         string shape;
     };
     struct Edge
     {
-        char weight;
+        string weight;
     };
 
     //Contains all the info about the graph
@@ -264,21 +265,27 @@ void DFA::graph(string output_file)
     string vertex2_circle_shape;
 
     //Populate the graph with the edges
-    for (int i = 0; i < n_edges; i++)
+    for (unsigned long long i = 0; i < n_edges; i++)
     {
         //Determine the shape of the vertices (depending on whether they're final or not)
-        if(final_states_set.find(edges_no_trans[i].first) == final_states_set.end()) {
-          vertex1_circle_shape = "circle";        //If the state/vertex isn't found in the final state set
-        } else {
-          vertex1_circle_shape = "doublecircle";
+        if (final_states_set.find(edges_no_trans[i].first) == final_states_set.end())
+        {
+            vertex1_circle_shape = "circle"; //If the state/vertex isn't found in the final state set
+        }
+        else
+        {
+            vertex1_circle_shape = "doublecircle";
         }
 
-        if(final_states_set.find(edges_no_trans[i].second) == final_states_set.end()) {
-          vertex2_circle_shape = "circle";
-        } else {
-          vertex2_circle_shape = "doublecircle";
+        if (final_states_set.find(edges_no_trans[i].second) == final_states_set.end())
+        {
+            vertex2_circle_shape = "circle";
         }
-        add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{transitions[i]}, g);
+        else
+        {
+            vertex2_circle_shape = "doublecircle";
+        }
+        add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{"\"" + string(1, transitions[i]) + "\""}, g);
     }
 
     //Write graph to file
@@ -300,13 +307,18 @@ void DFA::graph(string output_file)
     cout << "Graph exported as " << output_file << ".png" << endl;
 }
 
-bool DFA::checkIfValid(const string& chain) {
+bool DFA::checkIfValid(const string &chain)
+{
     bitset<128> node = initial_state;
 
-    for(const char& c:chain){
-        if(transitions.find({node, c}) == transitions.end()) {
+    for (const char &c : chain)
+    {
+        if (transitions.find({node, c}) == transitions.end())
+        {
             return false;
-        } else {
+        }
+        else
+        {
             node = transitions[{node, c}];
         }
     }
