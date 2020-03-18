@@ -32,6 +32,12 @@ You will then see several outputs in the console, including the time it took to 
 
 ![alt text](README_images/result.png)
 
+After that, you will be prompted to add a string to check if it is part of the generated language; you can input any string as so:
+
+![alt text](README_images/string_examples.png)
+
+Then you can just type `exit` to stop the program.
+
 ## Input regex format
 
 The input file format should be a well formed regex with the character '~' denoting epsilon.
