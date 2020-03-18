@@ -24,10 +24,10 @@ DFA::DFA(NFA &nfa)
     this->set_epsilon_path(this->initial_state, nfa.initial_node);
 
     // Adds the initial state to the state queue to find transitions.
-    this->states_to_search.push(bitset<128>(initial_state));
+    this->states_to_search.push(bitset<12345>(initial_state));
 
     // Inserts the initial state in the set to signal that it was already queued.
-    this->queued_states.insert(bitset<128>(initial_state));
+    this->queued_states.insert(bitset<12345>(initial_state));
 
     // Finds all the DFA's transitions.
     this->find_transitions();
@@ -39,13 +39,13 @@ DFA::DFA(NFA &nfa)
     this->find_final_states();
 }
 
-void DFA::set_epsilon_path(bitset<128> &states, unsigned long long state_to_add)
+void DFA::set_epsilon_path(bitset<12345> &states, unsigned long long state_to_add)
 {
     // Inserts the state to add into the bitset.
-    states |= (1 << state_to_add);
+    states[state_to_add] = 1;
 
     // Iterates all the states that can be reached with an epsilon movement.
-    bitset<128> reachable_states = this->nfa->transitions[make_pair(state_to_add, '~')];
+    bitset<12345> reachable_states = this->nfa->transitions[make_pair(state_to_add, '~')];
     for (unsigned long long i = 0; i < reachable_states.size(); ++i)
     {
         // Call the same function recursively to add the new state and all its epsilon movements.
@@ -56,7 +56,7 @@ void DFA::set_epsilon_path(bitset<128> &states, unsigned long long state_to_add)
     }
 }
 
-void DFA::set_epsilon_path(bitset<128> &states_no_epsilon)
+void DFA::set_epsilon_path(bitset<12345> &states_no_epsilon)
 {
     // Iterates all the states in the bitset.
     for (unsigned long long i = 0; i < states_no_epsilon.size(); ++i)
@@ -72,7 +72,7 @@ void DFA::find_transitions()
     // While there are still elements in the queue.
     while (!this->states_to_search.empty())
     {
-        bitset<128> processing_states = this->states_to_search.front();
+        bitset<12345> processing_states = this->states_to_search.front();
         this->states_to_search.pop();
 
         // Gets the epsilon path for the analyzing state.
@@ -82,7 +82,7 @@ void DFA::find_transitions()
         for (const auto &symbol : alphabet)
         {
             // Bitset that will contain the new states accessible from the current state and the iterating symbol.
-            bitset<128> new_states;
+            bitset<12345> new_states;
 
             // For each state in the current set of states.
             for (unsigned long long i = 0; i < processing_states.size(); ++i)
@@ -90,11 +90,11 @@ void DFA::find_transitions()
                 // Inserts all the states accessible with the given symbol.
                 if (processing_states[i] && nfa->transitions.find(make_pair(i, symbol)) != nfa->transitions.end())
                 {
-                    bitset<128> accessible_states = nfa->transitions[make_pair(i, symbol)];
+                    bitset<12345> accessible_states = nfa->transitions[make_pair(i, symbol)];
                     for (unsigned long long j = 0; j < accessible_states.size(); ++j)
                     {
                         if (accessible_states[j])
-                            new_states |= (1 << j);
+                            new_states[j] = 1;
                     }
                 }
             }
@@ -123,7 +123,7 @@ void DFA::find_final_states()
     // Iterates all states in the DFA.
     for (auto queued_state : this->queued_states)
     {
-        for (unsigned int i = 0; i < queued_state.size(); ++i)
+        for (unsigned long long i = 0; i < queued_state.size(); ++i)
         {
             if (queued_state[i] && this->nfa->final_states[i])
             {
@@ -194,17 +194,17 @@ bool DFA::write_to_file(string filepath)
 }
 
 //Returns a vector containing each node
-const vector<int> DFA::get_nodes_vector()
+const vector<unsigned long long> DFA::get_nodes_vector()
 {
-    vector<int> v(state_amount);
+    vector<unsigned long long> v(state_amount);
     iota(begin(v), end(v), 0);
     return v;
 }
 
 //Returns the start and end node of every edge as a vector of pairs
-const vector<pair<int, int>> DFA::get_edges_vector()
+const vector<pair<unsigned long long, unsigned long long>> DFA::get_edges_vector()
 {
-    vector<pair<int, int>> v;
+    vector<pair<unsigned long long, unsigned long long>> v;
     //For each transition, get the initial and final nodes
     for (const auto &transition : transitions)
     {
@@ -213,14 +213,15 @@ const vector<pair<int, int>> DFA::get_edges_vector()
     return v;
 }
 
-unordered_set<int> DFA::get_final_states() {
-  unordered_set<int> final_set;
-  //For each final set, push it in to our set
-  for (const auto &final_state : final_states)
-  {
-      final_set.insert(this->translations[final_state]);
-  }
-  return final_set;
+unordered_set<unsigned long long> DFA::get_final_states()
+{
+    unordered_set<unsigned long long> final_set;
+    //For each final set, push it in to our set
+    for (const auto &final_state : final_states)
+    {
+        final_set.insert(this->translations[final_state]);
+    }
+    return final_set;
 }
 
 //This returns a vector of transitions, each transition symbol refers to an edge in the edge vector
@@ -238,15 +239,15 @@ vector<char> DFA::get_transitions()
 void DFA::graph(string output_file)
 {
     //Set up the nodes, edges, and transition symbols
-    const vector<int> nodes = get_nodes_vector();
-    const vector<pair<int, int>> edges_no_trans = get_edges_vector();   //The start and end states of each edge
-    vector<char> transitions = get_transitions();                       //The transition symbol for each edge
-    const int n_edges = edges_no_trans.size();
-    unordered_set<int> final_states_set = get_final_states();           //For determining whether a state should be displayed with a double circle
+    const vector<unsigned long long> nodes = get_nodes_vector();
+    const vector<pair<unsigned long long, unsigned long long>> edges_no_trans = get_edges_vector(); //The start and end states of each edge
+    vector<char> transitions = get_transitions();                                                   //The transition symbol for each edge
+    const unsigned long long n_edges = edges_no_trans.size();
+    unordered_set<unsigned long long> final_states_set = get_final_states(); //For determining whether a state should be displayed with a double circle
 
     struct Vertex
     {
-        int id;
+        unsigned long long id;
         string shape;
     };
     struct Edge
@@ -264,19 +265,25 @@ void DFA::graph(string output_file)
     string vertex2_circle_shape;
 
     //Populate the graph with the edges
-    for (int i = 0; i < n_edges; i++)
+    for (unsigned long long i = 0; i < n_edges; i++)
     {
         //Determine the shape of the vertices (depending on whether they're final or not)
-        if(final_states_set.find(edges_no_trans[i].first) == final_states_set.end()) {
-          vertex1_circle_shape = "circle";        //If the state/vertex isn't found in the final state set
-        } else {
-          vertex1_circle_shape = "doublecircle";
+        if (final_states_set.find(edges_no_trans[i].first) == final_states_set.end())
+        {
+            vertex1_circle_shape = "circle"; //If the state/vertex isn't found in the final state set
+        }
+        else
+        {
+            vertex1_circle_shape = "doublecircle";
         }
 
-        if(final_states_set.find(edges_no_trans[i].second) == final_states_set.end()) {
-          vertex2_circle_shape = "circle";
-        } else {
-          vertex2_circle_shape = "doublecircle";
+        if (final_states_set.find(edges_no_trans[i].second) == final_states_set.end())
+        {
+            vertex2_circle_shape = "circle";
+        }
+        else
+        {
+            vertex2_circle_shape = "doublecircle";
         }
         add_edge(add_vertex(Vertex{edges_no_trans[i].first, vertex1_circle_shape}, g), add_vertex(Vertex{edges_no_trans[i].second, vertex2_circle_shape}, g), Edge{transitions[i]}, g);
     }
@@ -300,13 +307,18 @@ void DFA::graph(string output_file)
     cout << "Graph exported as " << output_file << ".png" << endl;
 }
 
-bool DFA::checkIfValid(const string& chain) {
-    bitset<128> node = initial_state;
+bool DFA::checkIfValid(const string &chain)
+{
+    bitset<12345> node = initial_state;
 
-    for(const char& c:chain){
-        if(transitions.find({node, c}) == transitions.end()) {
+    for (const char &c : chain)
+    {
+        if (transitions.find({node, c}) == transitions.end())
+        {
             return false;
-        } else {
+        }
+        else
+        {
             node = transitions[{node, c}];
         }
     }

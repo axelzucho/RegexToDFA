@@ -19,9 +19,10 @@
 
 using namespace std;
 
-typedef struct edge_transitions {
-  vector<pair<int, int>> edges_vector;
-  vector<char> transitions_vector;
+typedef struct edge_transitions
+{
+    vector<pair<unsigned long long, unsigned long long>> edges_vector;
+    vector<char> transitions_vector;
 } edge_transitions;
 
 class NFA
@@ -49,12 +50,12 @@ private:
     unsigned long long initial_node;
 
     // Contains all final states in the DFA.
-    bitset<128> final_states;
+    bitset<12345> final_states;
 
     // Dictionary that maps a state and a symbol to a set of states.
-    unordered_map<pair<unsigned long long, char>, bitset<128>, pair_llu_char_hash> transitions;
+    unordered_map<pair<unsigned long long, char>, bitset<12345>, pair_llu_char_hash> transitions;
 
-    void add_edge(int initial_node, int final_node, char symbol);
+    void add_edge(unsigned long long initial_node, unsigned long long final_node, char symbol);
 
     // So that DFA can access private values.
     friend class DFA;
@@ -75,13 +76,13 @@ public:
     void graph(string output_file);
 
     //Returns a vector of nodes in the NFA
-    const vector<int> get_nodes_vector();
+    const vector<unsigned long long> get_nodes_vector();
 
     //Returns a vector of start and end node pairs along with their transition symbols
     edge_transitions get_edges_vector();
 
-    //Returns a vector of nodes that are final states    
-    unordered_set<int> get_final_states();
+    //Returns a vector of nodes that are final states
+    unordered_set<unsigned long long> get_final_states();
 };
 
 #endif //NFA_TO_DFA_NFA_H
