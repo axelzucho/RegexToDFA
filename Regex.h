@@ -40,8 +40,10 @@ private:
 
     friend class DFA;
 
+    void computeRegex(const string& regex);
 public:
     explicit Regex(const string &filepath);
+    Regex();
 
     NFA nfa;
 
