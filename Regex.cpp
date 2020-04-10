@@ -87,14 +87,24 @@ Regex::Regex(const string &filepath)
         throw std::runtime_error("Could not open file");
     }
 
-    file >> infix_form;
-    this->infix_form = insertConcatOp(this->infix_form);
+    string regex;
+    file >> regex;
+
+    computeRegex(regex);
+}
+
+Regex::Regex() {
+    this->next_index = 0;
+}
+
+void Regex::computeRegex(const string &regex){
+    this->infix_form = insertConcatOp(regex);
 
     map<char, short int> precedence = {
-        {'(', 0},
-        {CONCAT_OP, 1},
-        {'|', 2},
-        {'*', 3}};
+            {'(', 0},
+            {CONCAT_OP, 1},
+            {'|', 2},
+            {'*', 3}};
 
     this->postfix_form = convertToPostfix(this->infix_form, precedence);
 }
