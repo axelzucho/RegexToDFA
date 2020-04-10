@@ -39,9 +39,8 @@ private:
     NodeGroup apply_star(const NodeGroup &node_group);
 
     friend class DFA;
-
-    void computeRegex(const string& regex);
 public:
+    void computeRegex(const string& regex);
     explicit Regex(const string &filepath);
     Regex();
 

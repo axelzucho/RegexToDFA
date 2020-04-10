@@ -21,10 +21,11 @@ Lexer::Lexer(const string &path) {
 
     string token, regex;
     while(file >> token && file >> regex) {
-        Regex reg(regex);
+        Regex reg;
+        reg.computeRegex(regex);
         reg.convert_to_NFA();
         DFA dfa(reg.nfa);
-        tokenized.emplace_back(make_pair(dfa, token)):
+        tokenized.emplace_back(make_pair(dfa, token));
     }
 }
 
