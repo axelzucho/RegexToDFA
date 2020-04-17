@@ -33,7 +33,9 @@ private:
     {
         size_t operator()(const pair<unsigned long long, char> &k) const
         {
-            return (hash<string>()(to_string(k.first) + k.second));
+            size_t h1 = hash<unsigned long long>()(k.first);
+            size_t h2 = k.second;
+            return h1 ^ (h2 << 1);
         }
     };
 

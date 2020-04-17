@@ -30,16 +30,8 @@ private:
     {
         for (long long i = b.size() - 1; i >= 0; i--)
         {
-            if (a[i] != b[i])
-            {
-                if (a[i])
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (a[i] ^ b[i]) {
+                return a[i];
             }
         }
         return false;
@@ -47,12 +39,7 @@ private:
 
     static bool is_a_equal_to_b(const bitset<12345> &a, const bitset<12345> &b)
     {
-        for (long long i = b.size() - 1; i >= 0; i--)
-        {
-            if (a[i] != b[i])
-                return false;
-        }
-        return true;
+        return a == b;
     }
 
     // Hash function required for unordered_map with a pair of bitset and char as key.
@@ -60,7 +47,10 @@ private:
     {
         size_t operator()(const pair<bitset<12345>, char> &k) const
         {
-            return hash<string>()(k.first.to_string() + k.second);
+            size_t h1 = hash<bitset<12345>>()(k.first);
+            size_t h2 = k.second;
+
+            return h1 ^ (h2 << 1);
         }
     };
 
@@ -69,7 +59,7 @@ private:
     {
         bool operator()(const bitset<12345> &k) const
         {
-            return (hash<string>()(k.to_string()));
+            return hash<bitset<12345>>()(k);
         }
     };
 
@@ -95,7 +85,7 @@ private:
     {
         bool operator()(const bitset<12345> &a, const bitset<12345> &b) const
         {
-            return a.to_string() == b.to_string();
+            return a == b;
         }
     };
 
