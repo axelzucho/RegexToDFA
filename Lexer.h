@@ -18,6 +18,10 @@ private:
 public:
     explicit Lexer(const string& path);
     vector<string> evaluate(const string& toParse);
+    // Function that returns the tokenized strings corresponding to each
+    // position in the input file.
+    vector<vector<string>> evaluateFile(const string& filepath);
+    void printOutputToFile(const vector<vector<string>>& result, const string& path);
 };
 
 

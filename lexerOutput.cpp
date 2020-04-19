@@ -8,43 +8,27 @@ using namespace std::chrono;
 
 int main(int argc, char* argv[])
 {
-    if(argc != 2) {
-        cout << "Expected one argument, the path to the input file\n";
+    if(argc != 4) {
+        cout << "Expected three arguments, the path to the regex input file, the path to the file to parse" <<
+        " and the output file with the tokens";
         cout << "Instead, got " << argc - 1 << " arguments." << endl;
         return 0;
     }
 
-    string input_file = argv[1];
+    string input_file_lexer = argv[1];
+    string input_file_parse = argv[2];
+    string output_file = argv[3];
 
     auto start = high_resolution_clock::now();
-    Lexer lexer(input_file);
+    Lexer lexer(input_file_lexer);
     auto stop = high_resolution_clock::now();
 
     auto time_span = duration_cast<duration<double>>(stop - start);
     cout << "Took " << time_span.count() << " seconds to tokenize all regexes" << endl;
 
-    while(true) {
-        string chain;
-        cout << "Enter a string to evaluate. If you want to exit, enter 'exit'\n";
-        cin >> chain;
-        start = high_resolution_clock::now();
-        if(chain == "exit") {
-            break;
-        } else {
-            const vector<string> allTokens = lexer.evaluate(chain);
-            stop = high_resolution_clock::now();
-            time_span = duration_cast<duration<double>>(stop - start);
-            cout << "Took " << time_span.count() << " seconds to tokenize the input\n";
-            if(allTokens.empty()) {
-                cout << "The provided input had no valid tokens\n";
-            } else {
-                cout << "The input has the following tokens:\n";
-                for(const auto& tk:allTokens) {
-                    cout << tk << "\n";
-                }
-            }
-        }
-    }
+    auto result = lexer.evaluateFile(input_file_parse);
+
+    lexer.printOutputToFile(result, output_file);
 
     return 0;
 }
